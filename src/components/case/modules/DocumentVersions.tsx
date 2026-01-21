@@ -33,7 +33,7 @@ export default function DocumentVersions({ caseId }: DocumentVersionsProps) {
     try {
       const data = await documentsAPI.getByCase(caseId);
       setDocuments(data);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load documents:', error);
     } finally {
       setLoading(false);
@@ -45,7 +45,7 @@ export default function DocumentVersions({ caseId }: DocumentVersionsProps) {
     try {
       const data = await documentVersionsAPI.getByDocument(documentId);
       setVersions(data);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load versions:', error);
     } finally {
       setLoadingVersions(false);
@@ -55,7 +55,7 @@ export default function DocumentVersions({ caseId }: DocumentVersionsProps) {
   const handleDownloadVersion = async (versionId: string, fileName: string) => {
     try {
       await documentVersionsAPI.download(versionId, fileName);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Download failed:', error);
     }
   };

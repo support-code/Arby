@@ -81,7 +81,7 @@ export default function Timeline({ caseId }: TimelineProps) {
               });
             }
           });
-        } catch (error) {
+        } catch (error: any) {
           console.error('Failed to load discussion sessions:', error);
         }
       }
@@ -162,7 +162,7 @@ export default function Timeline({ caseId }: TimelineProps) {
       // Sort by date (newest first)
       timelineEvents.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
       setTimeline(timelineEvents);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load timeline:', error);
     } finally {
       setLoading(false);

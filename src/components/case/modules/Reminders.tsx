@@ -34,7 +34,7 @@ export default function Reminders({ caseId, caseData }: RemindersProps) {
     try {
       const data = await remindersAPI.getByCase(caseId);
       setReminders(data);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load reminders:', error);
     } finally {
       setLoading(false);

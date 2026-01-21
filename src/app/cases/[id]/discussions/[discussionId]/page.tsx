@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import Layout from '@/components/Layout';
 import RichTextEditor from '@/components/editor/RichTextEditor';
 import { discussionSessionsAPI, protocolsAPI, decisionsAPI, usersAPI, documentsAPI, hearingsAPI } from '@/lib/api';
-import { DiscussionSession, Protocol, User, Decision, UserRole, Document, Attendee, AttendeeType, DecisionType, Hearing } from '@/types';
+import { DiscussionSession, Protocol, User, Decision, UserRole, Document, Attendee, AttendeeType, DecisionType, DecisionStatus, Hearing } from '@/types';
 import { useAuthStore } from '@/store/authStore';
 import FloatingSidebar from '@/components/discussion/FloatingSidebar';
 
@@ -284,7 +284,7 @@ export default function DiscussionSessionPage() {
         title: decisionTitle,
         content: decisionContent,
         discussionSessionId: discussionId,
-        status: 'draft'
+        status: DecisionStatus.DRAFT
       });
       
       setShowDecisionForm(false);
@@ -508,7 +508,14 @@ export default function DiscussionSessionPage() {
       }
     }
     if (session.status !== 'active') {
-      return `פרוטוקול נעול. סטטוס נוכחי: ${session.status === 'completed' ? 'הושלם' : session.status === 'ended' ? 'נסתיים' : session.status === 'signed' ? 'נחתם' : session.status}. פרוטוקול ניתן לעריכה רק במהלך דיון פעיל (ACTIVE).`;
+      const statusLabels: Record<string, string> = {
+        'completed': 'הושלם',
+        'cancelled': 'בוטל',
+        'ended': 'נסתיים',
+        'signed': 'נחתם'
+      };
+      const statusLabel = statusLabels[session.status] || session.status;
+      return `פרוטוקול נעול. סטטוס נוכחי: ${statusLabel}. פרוטוקול ניתן לעריכה רק במהלך דיון פעיל (ACTIVE).`;
     }
     if (attendees.length === 0) {
       return 'לא ניתן לכתוב פרוטוקול ללא נוכחים רשומים. יש להוסיף לפחות נוכח אחד לפני כתיבת הפרוטוקול.';

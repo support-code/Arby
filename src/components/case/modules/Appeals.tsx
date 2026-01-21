@@ -33,7 +33,7 @@ export default function Appeals({ caseId }: AppealsProps) {
     try {
       const data = await appealsAPI.getByCase(caseId);
       setAppeals(data);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load appeals:', error);
     } finally {
       setLoading(false);
@@ -44,7 +44,7 @@ export default function Appeals({ caseId }: AppealsProps) {
     try {
       const data = await decisionsAPI.getByCase(caseId);
       setDecisions(data);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load decisions:', error);
     }
   };
@@ -130,7 +130,7 @@ export default function Appeals({ caseId }: AppealsProps) {
       await appealsAPI.respond(appealId, { status, response: responseText || undefined });
       showToast('תגובה לערעור נשמרה בהצלחה', 'success');
       await loadAppeals();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to respond to appeal:', error);
       showToast(error?.response?.data?.error || 'שגיאה בתגובה לערעור', 'error');
     }

@@ -30,7 +30,7 @@ export default function InternalNotes({ caseId }: InternalNotesProps) {
     try {
       const data = await internalNotesAPI.getByCase(caseId);
       setNotes(data);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load internal notes:', error);
     } finally {
       setLoading(false);
@@ -65,7 +65,7 @@ export default function InternalNotes({ caseId }: InternalNotesProps) {
       await internalNotesAPI.delete(noteId);
       showToast('הערה פנימית נמחקה בהצלחה', 'success');
       await loadNotes();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to delete note:', error);
       showToast(error?.response?.data?.error || 'שגיאה במחיקת הערה', 'error');
     }

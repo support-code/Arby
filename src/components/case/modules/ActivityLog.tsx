@@ -28,7 +28,7 @@ export default function ActivityLog({ caseId }: ActivityLogProps) {
     try {
       const data = await auditAPI.getCaseLogs(caseId);
       setLogs(data);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load activity log:', error);
     } finally {
       setLoading(false);

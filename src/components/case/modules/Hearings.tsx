@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { hearingsAPI, discussionSessionsAPI } from '@/lib/api';
-import { Hearing, UserRole, HearingType, HearingStatus, DiscussionSession } from '@/types';
+import { Hearing, UserRole, HearingType, HearingStatus, DiscussionSession, Attendee, AttendeeType } from '@/types';
 import { useAuthStore } from '@/store/authStore';
 import { useToastStore } from '@/store/toastStore';
 
@@ -46,13 +46,13 @@ export default function Hearings({ caseId }: HearingsProps) {
         try {
           const sessions = await discussionSessionsAPI.getByHearing(hearing._id);
           sessionsMap[hearing._id] = sessions;
-        } catch (error) {
+        } catch (error: any) {
           console.error(`Failed to load sessions for hearing ${hearing._id}:`, error);
           sessionsMap[hearing._id] = [];
         }
       }
       setDiscussionSessions(sessionsMap);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load hearings:', error);
     } finally {
       setLoading(false);
@@ -66,11 +66,11 @@ export default function Hearings({ caseId }: HearingsProps) {
       if (!hearing) return;
 
       // Convert hearing participants to attendees format
-      const initialAttendees = hearing.participants.map((p: any) => {
+      const initialAttendees: Attendee[] = hearing.participants.map((p: any) => {
         const userId = typeof p === 'string' ? p : p._id;
         const name = typeof p === 'object' && p.name ? p.name : 'משתמש';
         return {
-          type: 'other',
+          type: AttendeeType.OTHER,
           name: name,
           userId: userId
         };

@@ -35,7 +35,7 @@ export default function Documents({ caseId, caseData }: DocumentsProps) {
     try {
       const data = await documentsAPI.getByCase(caseId);
       setDocuments(data);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load documents:', error);
     } finally {
       setLoading(false);
@@ -183,14 +183,8 @@ export default function Documents({ caseId, caseData }: DocumentsProps) {
 
   const handleDownload = async (documentId: string, fileName: string) => {
     try {
-      const blob = await documentsAPI.download(documentId);
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = fileName;
-      a.click();
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
+      await documentsAPI.download(documentId, fileName);
+    } catch (error: any) {
       console.error('Download failed:', error);
     }
   };
@@ -419,7 +413,7 @@ export default function Documents({ caseId, caseData }: DocumentsProps) {
                           <p className="font-semibold text-gray-900">{doc.originalName}</p>
                           {doc.documentType && (
                             <span className="px-2 py-0.5 text-xs rounded bg-blue-100 text-blue-700">
-                              {getDocumentTypeLabel(doc.documentType)}
+                              {getDocumentTypeLabel(doc.documentType as DocumentType)}
                             </span>
                           )}
                           <span className={`px-2 py-0.5 text-xs rounded ${

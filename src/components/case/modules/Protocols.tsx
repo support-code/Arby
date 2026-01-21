@@ -32,10 +32,10 @@ export default function Protocols({ caseId }: ProtocolsProps) {
       try {
         const discussionProtocolsData = await protocolsAPI.getByCase(caseId);
         setDiscussionProtocols(discussionProtocolsData);
-      } catch (error) {
+      } catch (error: any) {
         console.error('Failed to load discussion protocols:', error);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load protocols:', error);
     } finally {
       setLoading(false);
@@ -44,14 +44,8 @@ export default function Protocols({ caseId }: ProtocolsProps) {
 
   const handleDownload = async (documentId: string, fileName: string) => {
     try {
-      const blob = await documentsAPI.download(documentId);
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = fileName;
-      a.click();
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
+      await documentsAPI.download(documentId, fileName);
+    } catch (error: any) {
       console.error('Download failed:', error);
     }
   };
@@ -88,9 +82,7 @@ export default function Protocols({ caseId }: ProtocolsProps) {
                 <div className="space-y-3">
                   {discussionProtocols.map((protocol) => {
                     const createdBy = typeof protocol.createdBy === 'object' ? protocol.createdBy.name : 'משתמש';
-                    const sessionTitle = typeof protocol.discussionSessionId === 'object' && protocol.discussionSessionId
-                      ? protocol.discussionSessionId.title
-                      : 'דיון';
+                    const sessionTitle = 'דיון';
 
                     return (
                       <div

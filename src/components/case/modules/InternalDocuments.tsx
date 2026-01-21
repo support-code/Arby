@@ -30,7 +30,7 @@ export default function InternalDocuments({ caseId }: InternalDocumentsProps) {
         doc.isSecret === true
       );
       setDocuments(filtered);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load internal documents:', error);
     } finally {
       setLoading(false);
@@ -57,14 +57,8 @@ export default function InternalDocuments({ caseId }: InternalDocumentsProps) {
 
   const handleDownload = async (documentId: string, fileName: string) => {
     try {
-      const blob = await documentsAPI.download(documentId);
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = fileName;
-      a.click();
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
+      await documentsAPI.download(documentId, fileName);
+    } catch (error: any) {
       console.error('Download failed:', error);
     }
   };

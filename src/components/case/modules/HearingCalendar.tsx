@@ -21,7 +21,7 @@ export default function HearingCalendar({ caseId }: HearingCalendarProps) {
     try {
       const data = await hearingsAPI.getByCase(caseId);
       setHearings(data);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load hearings:', error);
     } finally {
       setLoading(false);

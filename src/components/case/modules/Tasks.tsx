@@ -78,7 +78,7 @@ export default function Tasks({ caseId, caseData }: TasksProps) {
     try {
       const data = await tasksAPI.getByCase(caseId);
       setTasks(data);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load tasks:', error);
     } finally {
       setLoading(false);
@@ -123,7 +123,7 @@ export default function Tasks({ caseId, caseData }: TasksProps) {
       await tasksAPI.update(taskId, { status: newStatus });
       showToast('סטטוס המשימה עודכן בהצלחה', 'success');
       await loadTasks();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to update task:', error);
       showToast(error?.response?.data?.error || 'שגיאה בעדכון המשימה', 'error');
     }

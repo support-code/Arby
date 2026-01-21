@@ -44,7 +44,7 @@ export default function RelatedCases({ caseId }: RelatedCasesProps) {
     try {
       const data = await relatedCasesAPI.getByCase(caseId);
       setRelatedCases(data);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load related cases:', error);
     } finally {
       setLoading(false);
@@ -57,7 +57,7 @@ export default function RelatedCases({ caseId }: RelatedCasesProps) {
       // Filter out current case
       const filtered = data.filter(c => c._id !== caseId);
       setAllCases(filtered);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load cases:', error);
     }
   };
@@ -90,7 +90,7 @@ export default function RelatedCases({ caseId }: RelatedCasesProps) {
       await relatedCasesAPI.delete(relatedCaseId);
       showToast('קישור תיק נמחק בהצלחה', 'success');
       await loadRelatedCases();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to delete related case:', error);
       showToast(error?.response?.data?.error || 'שגיאה במחיקת קישור תיק', 'error');
     }

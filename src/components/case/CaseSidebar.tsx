@@ -16,7 +16,7 @@ interface SidebarItem {
 interface CaseSidebarProps {
   activeModule: CaseModule;
   onModuleChange: (module: CaseModule) => void;
-  badges?: Record<CaseModule, number>;
+  badges?: Partial<Record<CaseModule, number>>;
 }
 
 export default function CaseSidebar({ activeModule, onModuleChange, badges = {} }: CaseSidebarProps) {

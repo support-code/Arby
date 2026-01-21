@@ -44,7 +44,7 @@ export default function Decisions({ caseId }: DecisionsProps) {
     try {
       const data = await decisionsAPI.getByCase(caseId);
       setDecisions(data);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load decisions:', error);
     } finally {
       setLoading(false);
@@ -55,7 +55,7 @@ export default function Decisions({ caseId }: DecisionsProps) {
     try {
       const data = await documentsAPI.getByCase(caseId);
       setDocuments(data);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load documents:', error);
     }
   };
@@ -64,7 +64,7 @@ export default function Decisions({ caseId }: DecisionsProps) {
     try {
       const data = await appealsAPI.getByCase(caseId);
       setAppeals(data);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load appeals:', error);
     }
   };
@@ -73,7 +73,7 @@ export default function Decisions({ caseId }: DecisionsProps) {
     try {
       const data = await requestsAPI.getByCase(caseId);
       setRequests(data);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load requests:', error);
     }
   };
@@ -82,7 +82,7 @@ export default function Decisions({ caseId }: DecisionsProps) {
     try {
       const data = await discussionSessionsAPI.getByCase(caseId);
       setDiscussionSessions(data);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load discussion sessions:', error);
     }
   };
@@ -426,10 +426,12 @@ export default function Decisions({ caseId }: DecisionsProps) {
           <div className="space-y-4">
             {decisions.map((decision) => {
               const createdBy = typeof decision.createdBy === 'object' ? decision.createdBy.name : 'משתמש';
-              const statusColors = {
-                draft: 'bg-gray-100 text-gray-700',
-                published: 'bg-green-100 text-green-700',
-                revoked: 'bg-red-100 text-red-700'
+              const statusColors: Record<DecisionStatus, string> = {
+                [DecisionStatus.DRAFT]: 'bg-gray-100 text-gray-700',
+                [DecisionStatus.SENT_FOR_SIGNATURE]: 'bg-yellow-100 text-yellow-700',
+                [DecisionStatus.SIGNED]: 'bg-green-100 text-green-700',
+                [DecisionStatus.PUBLISHED]: 'bg-green-100 text-green-700',
+                [DecisionStatus.REVOKED]: 'bg-red-100 text-red-700'
               };
               const relatedAppeals = getAppealsForDecision(decision._id);
 
@@ -442,10 +444,12 @@ export default function Decisions({ caseId }: DecisionsProps) {
                         <span className={`px-2 py-1 text-xs rounded ${getDecisionTypeColor(decision.type)}`}>
                           {getDecisionTypeLabel(decision.type)}
                         </span>
-                        <span className={`px-2 py-1 text-xs rounded ${statusColors[decision.status]}`}>
-                          {decision.status === 'draft' && 'טיוטה'}
-                          {decision.status === 'published' && 'פורסם'}
-                          {decision.status === 'revoked' && 'בוטל'}
+                        <span className={`px-2 py-1 text-xs rounded ${statusColors[decision.status] || 'bg-gray-100 text-gray-700'}`}>
+                          {decision.status === DecisionStatus.DRAFT && 'טיוטה'}
+                          {decision.status === DecisionStatus.SENT_FOR_SIGNATURE && 'נשלח לחתימה'}
+                          {decision.status === DecisionStatus.SIGNED && 'נחתם'}
+                          {decision.status === DecisionStatus.PUBLISHED && 'פורסם'}
+                          {decision.status === DecisionStatus.REVOKED && 'בוטל'}
                         </span>
                         {decision.closesDiscussion && (
                           <span className="px-2 py-1 text-xs rounded bg-red-100 text-red-700">

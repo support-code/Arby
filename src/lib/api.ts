@@ -5,7 +5,21 @@ import {
   DiscussionSession, Protocol
 } from '@/types';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+// Determine API URL based on environment
+const getApiUrl = () => {
+  // If explicitly set via environment variable, use it
+  if (process.env.NEXT_PUBLIC_API_URL) {
+    return process.env.NEXT_PUBLIC_API_URL;
+  }
+  // In production (not localhost), use the production API
+  if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+    return 'https://monkfish-app-wqzyb.ondigitalocean.app/api';
+  }
+  // Default to localhost for development
+  return 'http://localhost:5000/api';
+};
+
+const API_URL = getApiUrl();
 
 const api = axios.create({
   baseURL: API_URL,
@@ -133,10 +147,21 @@ export const documentsAPI = {
     });
     return data;
   },
-  download: async (documentId: string): Promise<Blob> => {
+  download: async (documentId: string, fileName?: string): Promise<Blob> => {
     const { data } = await api.get(`/documents/${documentId}/download`, {
       responseType: 'blob'
     });
+    // If fileName is provided, trigger download automatically
+    if (fileName && typeof window !== 'undefined') {
+      const url = window.URL.createObjectURL(data);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    }
     return data;
   },
   update: async (documentId: string, updates: Partial<Document>): Promise<Document> => {
@@ -361,10 +386,6 @@ export const protocolsAPI = {
   },
   getById: async (protocolId: string): Promise<Protocol> => {
     const { data } = await api.get(`/protocols/${protocolId}`);
-    return data;
-  },
-  getByCase: async (caseId: string): Promise<Protocol[]> => {
-    const { data } = await api.get(`/protocols/case/${caseId}`);
     return data;
   },
   create: async (protocolData: Partial<Protocol>): Promise<Protocol> => {

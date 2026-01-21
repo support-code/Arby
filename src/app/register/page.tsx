@@ -111,7 +111,7 @@ export default function RegisterPage() {
       <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8">
         <h1 className="text-3xl font-bold text-center mb-2">הרשמה</h1>
         <p className="text-center text-gray-600 mb-6">
-          הוזמנת כ-{roleLabels[invitation.role]}
+          הוזמנת כ-{invitation.role && roleLabels[invitation.role as UserRole] ? roleLabels[invitation.role as UserRole] : invitation.role}
         </p>
         
         {error && (

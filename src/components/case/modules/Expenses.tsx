@@ -32,7 +32,7 @@ export default function Expenses({ caseId }: ExpensesProps) {
     try {
       const data = await expensesAPI.getByCase(caseId);
       setExpenses(data);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load expenses:', error);
     } finally {
       setLoading(false);

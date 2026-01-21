@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 export type ToastType = 'success' | 'error' | 'info' | 'warning';
 
-interface Toast {
+export interface Toast {
   id: string;
   message: string;
   type: ToastType;

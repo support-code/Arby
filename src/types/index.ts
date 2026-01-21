@@ -255,7 +255,7 @@ export interface DiscussionSession {
   attendees: Attendee[];
   protocol?: string; // HTML content of the protocol
   decisions?: Decision[];
-  status: 'active' | 'completed' | 'cancelled';
+  status: 'created' | 'active' | 'ended' | 'signed' | 'completed' | 'cancelled';
   createdBy: User | string;
   createdAt: string;
   updatedAt: string;

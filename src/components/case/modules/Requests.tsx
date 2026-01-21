@@ -31,7 +31,7 @@ export default function Requests({ caseId }: RequestsProps) {
     try {
       const data = await requestsAPI.getByCase(caseId);
       setRequests(data);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load requests:', error);
     } finally {
       setLoading(false);
@@ -119,7 +119,7 @@ export default function Requests({ caseId }: RequestsProps) {
       await requestsAPI.respond(requestId, { status, response: responseText || undefined });
       showToast('תגובה לבקשה נשמרה בהצלחה', 'success');
       await loadRequests();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to respond to request:', error);
       showToast(error?.response?.data?.error || 'שגיאה בתגובה לבקשה', 'error');
     }

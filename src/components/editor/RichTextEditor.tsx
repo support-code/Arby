@@ -7,9 +7,10 @@ interface RichTextEditorProps {
   onChange: (value: string) => void;
   placeholder?: string;
   className?: string;
+  disabled?: boolean;
 }
 
-export default function RichTextEditor({ value, onChange, placeholder, className = '' }: RichTextEditorProps) {
+export default function RichTextEditor({ value, onChange, placeholder, className = '', disabled = false }: RichTextEditorProps) {
   const editorRef = useRef<HTMLDivElement>(null);
   const [isBold, setIsBold] = useState(false);
   const [isItalic, setIsItalic] = useState(false);
@@ -80,7 +81,7 @@ export default function RichTextEditor({ value, onChange, placeholder, className
   return (
     <div className={`border border-gray-300 rounded-lg bg-white ${className}`}>
       {/* Toolbar */}
-      <div className="border-b border-gray-300 p-2 flex flex-wrap items-center gap-1 bg-gray-50">
+      <div className={`border-b border-gray-300 p-2 flex flex-wrap items-center gap-1 bg-gray-50 ${disabled ? 'opacity-60 pointer-events-none' : ''}`}>
         {/* Font Formatting */}
         <div className="flex items-center gap-1 border-r border-gray-300 pr-2 mr-2">
           <ToolbarButton onClick={() => execCommand('bold')} isActive={isBold} title="מודגש">
@@ -193,9 +194,9 @@ export default function RichTextEditor({ value, onChange, placeholder, className
       {/* Editor */}
       <div
         ref={editorRef}
-        contentEditable
+        contentEditable={!disabled}
         onInput={handleInput}
-        className="min-h-[400px] p-4 focus:outline-none"
+        className={`min-h-[400px] p-4 focus:outline-none ${disabled ? 'bg-gray-100 cursor-not-allowed opacity-60' : ''}`}
         style={{ direction: 'rtl', textAlign: 'right' }}
         data-placeholder={placeholder || 'התחל לכתוב...'}
         suppressContentEditableWarning

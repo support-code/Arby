@@ -26,7 +26,7 @@ export default function Comments({ caseId }: CommentsProps) {
     try {
       const data = await commentsAPI.getByCase(caseId);
       setComments(data);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load comments:', error);
     } finally {
       setLoading(false);
@@ -60,7 +60,7 @@ export default function Comments({ caseId }: CommentsProps) {
       await commentsAPI.delete(commentId);
       showToast('תגובה נמחקה בהצלחה', 'success');
       await loadComments();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to delete comment:', error);
       showToast(error?.response?.data?.error || 'שגיאה במחיקת תגובה', 'error');
     }

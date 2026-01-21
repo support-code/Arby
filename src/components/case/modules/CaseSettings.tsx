@@ -108,7 +108,7 @@ export default function CaseSettings({ caseData, onUpdate }: CaseSettingsProps) 
             </label>
             <select
               value={settings.confidentialityLevel}
-              onChange={(e) => setSettings({ ...settings, confidentialityLevel: e.target.value })}
+              onChange={(e) => setSettings({ ...settings, confidentialityLevel: e.target.value as 'public' | 'confidential' | 'secret' | 'top_secret' })}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
               <option value="public">פומבי</option>

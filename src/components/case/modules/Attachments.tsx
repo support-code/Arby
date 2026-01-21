@@ -33,7 +33,7 @@ export default function Attachments({ caseId }: AttachmentsProps) {
          !doc.originalName.toLowerCase().includes('protocol'))
       );
       setAttachments(filtered);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load attachments:', error);
     } finally {
       setLoading(false);
@@ -60,14 +60,8 @@ export default function Attachments({ caseId }: AttachmentsProps) {
 
   const handleDownload = async (documentId: string, fileName: string) => {
     try {
-      const blob = await documentsAPI.download(documentId);
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = fileName;
-      a.click();
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
+      await documentsAPI.download(documentId, fileName);
+    } catch (error: any) {
       console.error('Download failed:', error);
     }
   };
