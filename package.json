@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:digitalocean": "next build && node scripts/build-for-digitalocean.js",
     "start": "next start",
     "lint": "next lint"
   },
