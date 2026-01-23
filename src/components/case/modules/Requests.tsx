@@ -1,10 +1,22 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { requestsAPI } from '@/lib/api';
-import { Request, UserRole, RequestType, RequestStatus } from '@/types';
+import { requestsAPI, decisionsAPI } from '@/lib/api';
+import { Request, UserRole, RequestType, RequestStatus, Decision, Document } from '@/types';
 import { useAuthStore } from '@/store/authStore';
 import { useToastStore } from '@/store/toastStore';
+import dynamic from 'next/dynamic';
+
+// Dynamically import PDF components with SSR disabled
+const PDFAnnotator = dynamic(() => import('@/components/pdf/PDFAnnotatorDirect'), {
+  ssr: false,
+  loading: () => <div className="flex items-center justify-center p-8">טוען PDF...</div>
+});
+
+const PDFViewer = dynamic(() => import('@/components/pdf/PDFViewer'), {
+  ssr: false,
+  loading: () => <div className="flex items-center justify-center p-8">טוען PDF...</div>
+});
 
 interface RequestsProps {
   caseId: string;
@@ -15,10 +27,21 @@ export default function Requests({ caseId }: RequestsProps) {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [showDecisionForm, setShowDecisionForm] = useState<string | null>(null);
+  const [decisionSubmitting, setDecisionSubmitting] = useState(false);
+  const [viewingPdf, setViewingPdf] = useState<{ requestId: string; documentId: string } | null>(null);
+  const [requestAttachments, setRequestAttachments] = useState<{ [requestId: string]: Document[] }>({});
   const [formData, setFormData] = useState({
     type: RequestType.INSTRUCTION,
     title: '',
     content: ''
+  });
+  const [pdfFiles, setPdfFiles] = useState<File[]>([]);
+  const [decisionFormData, setDecisionFormData] = useState({
+    title: '',
+    content: '',
+    decisionType: 'note' as 'note' | 'final', // 'note' = החלטה עבור הבקשה, 'final' = החלטה סופית
+    closesCase: false
   });
   const { hasRole } = useAuthStore();
   const { showToast } = useToastStore();
@@ -31,6 +54,20 @@ export default function Requests({ caseId }: RequestsProps) {
     try {
       const data = await requestsAPI.getByCase(caseId);
       setRequests(data);
+      
+      // Load attachments for each request
+      const attachmentsMap: { [requestId: string]: Document[] } = {};
+      for (const request of data) {
+        if (request.attachments && request.attachments.length > 0) {
+          try {
+            const attachments = await requestsAPI.getAttachments(request._id);
+            attachmentsMap[request._id] = attachments;
+          } catch (error: any) {
+            console.error(`Failed to load attachments for request ${request._id}:`, error);
+          }
+        }
+      }
+      setRequestAttachments(attachmentsMap);
     } catch (error: any) {
       console.error('Failed to load requests:', error);
     } finally {
@@ -93,13 +130,14 @@ export default function Requests({ caseId }: RequestsProps) {
         type: formData.type,
         title: formData.title,
         content: formData.content
-      });
+      }, pdfFiles.length > 0 ? pdfFiles : undefined);
       
       setFormData({
         type: RequestType.INSTRUCTION,
         title: '',
         content: ''
       });
+      setPdfFiles([]);
       setShowForm(false);
       showToast('בקשה נוצרה בהצלחה', 'success');
       await loadRequests();
@@ -122,6 +160,37 @@ export default function Requests({ caseId }: RequestsProps) {
     } catch (error: any) {
       console.error('Failed to respond to request:', error);
       showToast(error?.response?.data?.error || 'שגיאה בתגובה לבקשה', 'error');
+    }
+  };
+
+  const handleCreateDecision = async (requestId: string) => {
+    if (!decisionFormData.title || !decisionFormData.content) {
+      showToast('יש למלא כותרת ותוכן להחלטה', 'error');
+      return;
+    }
+
+    setDecisionSubmitting(true);
+    try {
+      await requestsAPI.createDecision(requestId, {
+        title: decisionFormData.title,
+        content: decisionFormData.content,
+        isFinalDecision: decisionFormData.decisionType === 'final',
+        closesCase: decisionFormData.closesCase
+      });
+      showToast('החלטה נוצרה בהצלחה', 'success');
+      setShowDecisionForm(null);
+      setDecisionFormData({
+        title: '',
+        content: '',
+        decisionType: 'note',
+        closesCase: false
+      });
+      await loadRequests();
+    } catch (error: any) {
+      console.error('Failed to create decision:', error);
+      showToast(error?.response?.data?.error || 'שגיאה ביצירת החלטה', 'error');
+    } finally {
+      setDecisionSubmitting(false);
     }
   };
 
@@ -190,6 +259,29 @@ export default function Requests({ caseId }: RequestsProps) {
                   required
                 />
               </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-1">צרף קבצי PDF (אופציונלי)</label>
+                <input
+                  type="file"
+                  accept=".pdf,application/pdf"
+                  multiple
+                  onChange={(e) => {
+                    const files = Array.from(e.target.files || []);
+                    setPdfFiles(files.filter(f => f.type === 'application/pdf'));
+                  }}
+                  className="w-full p-2 border border-gray-300 rounded-lg"
+                />
+                {pdfFiles.length > 0 && (
+                  <div className="mt-2">
+                    <p className="text-sm text-gray-600 mb-1">קבצים נבחרו:</p>
+                    <ul className="list-disc list-inside text-sm text-gray-600">
+                      {pdfFiles.map((file, idx) => (
+                        <li key={idx}>{file.name}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
             </div>
             <div className="flex gap-2 mt-4">
               <button
@@ -208,6 +300,7 @@ export default function Requests({ caseId }: RequestsProps) {
                     title: '',
                     content: ''
                   });
+                  setPdfFiles([]);
                 }}
                 className="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300 font-semibold"
               >
@@ -267,41 +360,120 @@ export default function Requests({ caseId }: RequestsProps) {
                         <span>•</span>
                         <span>{new Date(request.createdAt).toLocaleDateString('he-IL')}</span>
                       </div>
+                      {requestAttachments[request._id] && requestAttachments[request._id].length > 0 && (
+                        <div className="mt-3">
+                          <p className="text-sm font-semibold text-gray-700 mb-2">קבצים מצורפים:</p>
+                          <div className="flex flex-wrap gap-2">
+                            {requestAttachments[request._id].map((attachment) => {
+                              const docId = typeof attachment === 'string' ? attachment : attachment._id;
+                              const docName = typeof attachment === 'string' ? 'מסמך' : attachment.originalName;
+                              return (
+                                <div key={docId} className="flex items-center gap-2">
+                                  <span className="text-sm text-gray-600">{docName}</span>
+                                  {canRespond && (
+                                    <button
+                                      onClick={() => setViewingPdf({ requestId: request._id, documentId: docId })}
+                                      className="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600"
+                                    >
+                                      סמן PDF
+                                    </button>
+                                  )}
+                                  {!canRespond && (
+                                    <button
+                                      onClick={() => setViewingPdf({ requestId: request._id, documentId: docId })}
+                                      className="bg-gray-500 text-white px-3 py-1 rounded text-sm hover:bg-gray-600"
+                                    >
+                                      צפה ב-PDF
+                                    </button>
+                                  )}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
                       {canRespond && request.status === RequestStatus.PENDING && (
-                        <div className="mt-3 flex gap-2">
+                        <div className="mt-3">
                           <button
-                            onClick={() => handleRespond(request._id, RequestStatus.APPROVED)}
-                            className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 text-sm font-semibold"
+                            onClick={() => setShowDecisionForm(request._id)}
+                            className="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 text-sm font-semibold"
                           >
-                            לאשר
-                          </button>
-                          <button
-                            onClick={() => handleRespond(request._id, RequestStatus.REJECTED)}
-                            className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 text-sm font-semibold"
-                          >
-                            לדחות
-                          </button>
-                          <button
-                            onClick={() => handleRespond(request._id, RequestStatus.UNDER_REVIEW)}
-                            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm font-semibold"
-                          >
-                            לבדיקה
+                            יצירת החלטה
                           </button>
                         </div>
                       )}
-                      {canRespond && request.status === RequestStatus.PENDING && !request.response && (
-                        <div className="mt-2">
-                          <button
-                            onClick={() => {
-                              const response = prompt('הוסף תגובה מפורטת:');
-                              if (response) {
-                                handleRespond(request._id, RequestStatus.UNDER_REVIEW, response);
-                              }
-                            }}
-                            className="text-blue-600 hover:text-blue-700 text-sm underline"
-                          >
-                            הוסף תגובה מפורטת
-                          </button>
+                      {canRespond && showDecisionForm === request._id && (
+                        <div className="mt-4 p-4 bg-purple-50 rounded-lg border border-purple-200">
+                          <h4 className="font-semibold text-gray-900 mb-3">יצירת החלטה על הבקשה</h4>
+                          <div className="space-y-3">
+                            <div>
+                              <label className="block text-sm font-semibold text-gray-700 mb-1">סוג החלטה</label>
+                              <select
+                                value={decisionFormData.decisionType}
+                                onChange={(e) => setDecisionFormData({ ...decisionFormData, decisionType: e.target.value as 'note' | 'final' })}
+                                className="w-full p-2 border border-gray-300 rounded-lg"
+                              >
+                                <option value="note">החלטה עבור הבקשה</option>
+                                <option value="final">החלטה סופית</option>
+                              </select>
+                            </div>
+                            <div>
+                              <label className="block text-sm font-semibold text-gray-700 mb-1">כותרת ההחלטה</label>
+                              <input
+                                type="text"
+                                value={decisionFormData.title}
+                                onChange={(e) => setDecisionFormData({ ...decisionFormData, title: e.target.value })}
+                                className="w-full p-2 border border-gray-300 rounded-lg"
+                                placeholder="כותרת ההחלטה"
+                                required
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-sm font-semibold text-gray-700 mb-1">תוכן ההחלטה</label>
+                              <textarea
+                                value={decisionFormData.content}
+                                onChange={(e) => setDecisionFormData({ ...decisionFormData, content: e.target.value })}
+                                className="w-full p-2 border border-gray-300 rounded-lg"
+                                rows={5}
+                                placeholder="פרט את ההחלטה..."
+                                required
+                              />
+                            </div>
+                            {decisionFormData.decisionType === 'final' && (
+                              <div className="flex items-center gap-2">
+                                <input
+                                  type="checkbox"
+                                  checked={decisionFormData.closesCase}
+                                  onChange={(e) => setDecisionFormData({ ...decisionFormData, closesCase: e.target.checked })}
+                                  className="w-4 h-4"
+                                />
+                                <span className="text-sm text-gray-700">סוגרת את התיק</span>
+                              </div>
+                            )}
+                            <div className="flex gap-2">
+                              <button
+                                onClick={() => handleCreateDecision(request._id)}
+                                disabled={decisionSubmitting}
+                                className="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 font-semibold disabled:opacity-50"
+                              >
+                                {decisionSubmitting ? 'יוצר...' : 'צור החלטה'}
+                              </button>
+                              <button
+                                onClick={() => {
+                                  setShowDecisionForm(null);
+                                  setDecisionFormData({
+                                    title: '',
+                                    content: '',
+                                    decisionType: 'note',
+                                    closesCase: false
+                                  });
+                                }}
+                                className="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300 font-semibold"
+                              >
+                                ביטול
+                              </button>
+                            </div>
+                          </div>
                         </div>
                       )}
                     </div>
@@ -312,6 +484,42 @@ export default function Requests({ caseId }: RequestsProps) {
           </div>
         )}
       </div>
+
+      {/* PDF Viewer/Annotator Modal */}
+      {viewingPdf && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg shadow-xl w-full h-full max-w-7xl max-h-[90vh] flex flex-col">
+            <div className="flex justify-between items-center p-4 border-b">
+              <h3 className="text-lg font-semibold">צפייה/סימון PDF</h3>
+              <button
+                onClick={() => setViewingPdf(null)}
+                className="text-gray-500 hover:text-gray-700 text-2xl"
+              >
+                ×
+              </button>
+            </div>
+            <div className="flex-1 overflow-hidden">
+              {canRespond ? (
+                <PDFAnnotator
+                  documentId={viewingPdf.documentId}
+                  requestId={viewingPdf.requestId}
+                  caseId={caseId}
+                  readOnly={false}
+                  onSave={() => {
+                    // Reload requests to get updated annotations
+                    loadRequests();
+                  }}
+                />
+              ) : (
+                <PDFViewer
+                  file={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/documents/${viewingPdf.documentId}/download`}
+                  className="h-full"
+                />
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

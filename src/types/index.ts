@@ -117,6 +117,8 @@ export interface Decision {
   requestId?: string | Request; // For NOTE_DECISION - link to request
   discussionSessionId?: string; // For DISCUSSION_DECISION and FINAL_DECISION (Legal Requirement #13: Not time-bound)
   closesDiscussion?: boolean; // For FINAL_DECISION - indicates if this closes the discussion
+  closesCase?: boolean; // For FINAL_DECISION - indicates if this closes the entire case
+  annotatedPdfDocumentId?: string | Document; // Link to annotated PDF document
   publishedAt?: string;
   status: DecisionStatus;
   // Legal Requirement #12: Deletion is controlled system action (soft delete)
@@ -156,6 +158,7 @@ export interface Request {
   respondedBy?: User | string;
   responseDate?: string;
   response?: string;
+  attachments?: (Document | string)[]; // Document IDs for attached PDFs
   createdAt: string;
   updatedAt: string;
 }
@@ -371,6 +374,33 @@ export interface Expense {
   createdBy: User | string;
   createdAt: string;
   updatedAt: string;
+}
+
+export enum AnnotationType {
+  HIGHLIGHT = 'highlight',
+  TEXT = 'text',
+  ARROW = 'arrow',
+  RECTANGLE = 'rectangle',
+  CIRCLE = 'circle'
+}
+
+export interface Annotation {
+  _id?: string;
+  requestId: string;
+  documentId: string; // Reference to Document (PDF)
+  pageNumber: number;
+  type: AnnotationType;
+  x: number; // Relative coordinate (0-1)
+  y: number; // Relative coordinate (0-1)
+  width: number; // Relative coordinate (0-1)
+  height: number; // Relative coordinate (0-1)
+  color: string; // Hex color
+  content?: string; // For text annotations
+  createdBy: User | string; // User ID (arbitrator)
+  timestamp: string;
+  isDeleted?: boolean; // Soft delete
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 // Module types for sidebar navigation

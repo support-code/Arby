@@ -2,7 +2,7 @@ import axios from 'axios';
 import { 
   User, Case, Document, Invitation, Decision, Request, Comment, Task, 
   Hearing, Appeal, InternalNote, DocumentVersion, RelatedCase, Reminder, Expense,
-  DiscussionSession, Protocol
+  DiscussionSession, Protocol, Annotation
 } from '@/types';
 
 // Determine API URL based on environment
@@ -248,6 +248,10 @@ export const decisionsAPI = {
   },
   delete: async (decisionId: string): Promise<void> => {
     await api.delete(`/decisions/${decisionId}`);
+  },
+  generateAnnotatedPdf: async (decisionId: string): Promise<Decision> => {
+    const { data } = await api.post(`/decisions/${decisionId}/generate-annotated-pdf`);
+    return data;
   }
 };
 
@@ -261,13 +265,65 @@ export const requestsAPI = {
     const { data } = await api.get(`/requests/${requestId}`);
     return data;
   },
-  create: async (requestData: Partial<Request>): Promise<Request> => {
-    const { data } = await api.post('/requests', requestData);
+  create: async (requestData: Partial<Request>, pdfFiles?: File[]): Promise<Request> => {
+    if (pdfFiles && pdfFiles.length > 0) {
+      // Use FormData for file uploads
+      const formData = new FormData();
+      formData.append('caseId', requestData.caseId!);
+      formData.append('type', requestData.type!);
+      formData.append('title', requestData.title!);
+      formData.append('content', requestData.content!);
+      
+      pdfFiles.forEach(file => {
+        formData.append('pdfs', file);
+      });
+
+      const { data } = await fileApi.post('/requests', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      return data;
+    } else {
+      // Regular JSON request without files
+      const { data } = await api.post('/requests', requestData);
+      return data;
+    }
+  },
+  getAttachments: async (requestId: string): Promise<Document[]> => {
+    const { data } = await api.get(`/requests/${requestId}/attachments`);
     return data;
   },
   respond: async (requestId: string, response: { status: string; response?: string }): Promise<Request> => {
     const { data } = await api.patch(`/requests/${requestId}/respond`, response);
     return data;
+  },
+  createDecision: async (requestId: string, decisionData: { title: string; content: string; isFinalDecision?: boolean; closesCase?: boolean }): Promise<Decision> => {
+    const { data } = await api.post(`/requests/${requestId}/decision`, decisionData);
+    return data;
+  }
+};
+
+// Annotations API
+export const annotationsAPI = {
+  create: async (annotation: Partial<Annotation>): Promise<Annotation> => {
+    const { data } = await api.post('/annotations', annotation);
+    return data;
+  },
+  getByRequest: async (requestId: string): Promise<Annotation[]> => {
+    const { data } = await api.get(`/annotations/request/${requestId}`);
+    return data;
+  },
+  getByDocument: async (requestId: string, documentId: string): Promise<Annotation[]> => {
+    const { data } = await api.get(`/annotations/request/${requestId}/document/${documentId}`);
+    return data;
+  },
+  update: async (annotationId: string, updates: Partial<Annotation>): Promise<Annotation> => {
+    const { data } = await api.put(`/annotations/${annotationId}`, updates);
+    return data;
+  },
+  delete: async (annotationId: string): Promise<void> => {
+    await api.delete(`/annotations/${annotationId}`);
   }
 };
 

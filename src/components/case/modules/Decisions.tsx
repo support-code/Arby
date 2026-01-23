@@ -5,6 +5,13 @@ import { decisionsAPI, documentsAPI, appealsAPI, requestsAPI, discussionSessions
 import { Decision, Appeal, UserRole, DecisionStatus, DecisionType, AppealType, AppealStatus, Request, DiscussionSession } from '@/types';
 import { useAuthStore } from '@/store/authStore';
 import { useToastStore } from '@/store/toastStore';
+import dynamic from 'next/dynamic';
+
+// Dynamically import PDF viewer with SSR disabled
+const PDFViewer = dynamic(() => import('@/components/pdf/PDFViewer'), {
+  ssr: false,
+  loading: () => <div className="flex items-center justify-center p-8">טוען PDF...</div>
+});
 
 interface DecisionsProps {
   caseId: string;
@@ -18,6 +25,7 @@ export default function Decisions({ caseId }: DecisionsProps) {
   const [discussionSessions, setDiscussionSessions] = useState<DiscussionSession[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
+  const [viewingAnnotatedPdf, setViewingAnnotatedPdf] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     type: DecisionType.NOTE_DECISION,
@@ -451,6 +459,11 @@ export default function Decisions({ caseId }: DecisionsProps) {
                           {decision.status === DecisionStatus.PUBLISHED && 'פורסם'}
                           {decision.status === DecisionStatus.REVOKED && 'בוטל'}
                         </span>
+                        {decision.closesCase && (
+                          <span className="px-2 py-1 text-xs rounded bg-red-100 text-red-700 font-semibold">
+                            סוגרת תיק
+                          </span>
+                        )}
                         {decision.closesDiscussion && (
                           <span className="px-2 py-1 text-xs rounded bg-red-100 text-red-700">
                             סוגר דיון
@@ -492,6 +505,23 @@ export default function Decisions({ caseId }: DecisionsProps) {
                           </>
                         )}
                       </div>
+                      
+                      {/* Annotated PDF */}
+                      {decision.annotatedPdfDocumentId && (
+                        <div className="mt-3">
+                          <button
+                            onClick={() => {
+                              const docId = typeof decision.annotatedPdfDocumentId === 'object' 
+                                ? decision.annotatedPdfDocumentId._id 
+                                : decision.annotatedPdfDocumentId;
+                              setViewingAnnotatedPdf(docId ?? null);
+                            }}
+                            className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 text-sm font-semibold"
+                          >
+                            צפה ב-PDF מסומן
+                          </button>
+                        </div>
+                      )}
                       
                       {/* Related Appeals */}
                       {relatedAppeals.length > 0 && (
