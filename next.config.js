@@ -22,28 +22,19 @@ const nextConfig = {
         fs: false,
         path: false,
         crypto: false,
+        canvas: false,
       };
-    }
-
-    // Handle pdfjs-dist module resolution - more aggressive fix
-    if (!isServer) {
+      
       // Ignore canvas in browser
       config.resolve.alias.canvas = false;
       
-      // Fix for pdfjs-dist bundling issue - exclude from optimization
-      config.optimization = config.optimization || {};
-      config.optimization.splitChunks = {
-        ...config.optimization.splitChunks,
-        cacheGroups: {
-          ...config.optimization.splitChunks?.cacheGroups,
-          pdfjs: {
-            test: /[\\/]node_modules[\\/](pdfjs-dist|react-pdf)[\\/]/,
-            name: 'pdfjs',
-            chunks: 'all',
-            enforce: true
-          }
-        }
-      };
+      // Exclude pdfjs-dist from bundling to avoid webpack issues
+      config.externals = config.externals || [];
+      if (Array.isArray(config.externals)) {
+        config.externals.push('pdfjs-dist');
+      } else {
+        config.externals = [config.externals, 'pdfjs-dist'];
+      }
     }
 
     return config;

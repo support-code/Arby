@@ -69,7 +69,7 @@ export default function CaseSettings({ caseData, onUpdate }: CaseSettingsProps) 
               type="text"
               value={settings.caseNumber}
               onChange={(e) => setSettings({ ...settings, caseNumber: e.target.value })}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
               placeholder="מספר תיק"
             />
           </div>
@@ -82,7 +82,7 @@ export default function CaseSettings({ caseData, onUpdate }: CaseSettingsProps) 
               type="text"
               value={settings.caseType}
               onChange={(e) => setSettings({ ...settings, caseType: e.target.value })}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
               placeholder="סוג תיק"
             />
           </div>
@@ -95,7 +95,7 @@ export default function CaseSettings({ caseData, onUpdate }: CaseSettingsProps) 
               type="number"
               value={settings.claimAmount}
               onChange={(e) => setSettings({ ...settings, claimAmount: parseFloat(e.target.value) || 0 })}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
               placeholder="0"
               min="0"
               step="0.01"
@@ -109,7 +109,7 @@ export default function CaseSettings({ caseData, onUpdate }: CaseSettingsProps) 
             <select
               value={settings.confidentialityLevel}
               onChange={(e) => setSettings({ ...settings, confidentialityLevel: e.target.value as 'public' | 'confidential' | 'secret' | 'top_secret' })}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
             >
               <option value="public">פומבי</option>
               <option value="confidential">חסוי</option>
@@ -122,7 +122,7 @@ export default function CaseSettings({ caseData, onUpdate }: CaseSettingsProps) 
             <button
               onClick={handleSave}
               disabled={saving}
-              className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+              className="bg-orange-600 text-white px-6 py-2 rounded-lg hover:bg-orange-700 font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {saving ? 'שומר...' : 'שמור שינויים'}
             </button>

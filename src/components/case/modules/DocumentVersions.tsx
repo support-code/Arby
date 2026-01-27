@@ -112,7 +112,7 @@ export default function DocumentVersions({ caseId }: DocumentVersionsProps) {
                     onClick={() => setSelectedDoc(doc)}
                     className={`w-full text-right p-3 border rounded-lg transition-colors ${
                       selectedDoc?._id === doc._id
-                        ? 'bg-blue-50 border-blue-300 font-semibold'
+                        ? 'bg-orange-50 border-orange-300 font-semibold'
                         : 'bg-white border-gray-200 hover:bg-gray-50'
                     }`}
                   >
@@ -132,7 +132,7 @@ export default function DocumentVersions({ caseId }: DocumentVersionsProps) {
                       גרסאות: {selectedDoc.originalName}
                     </h3>
                     {canCreateVersion && (
-                      <label className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 cursor-pointer font-semibold text-sm flex items-center gap-2">
+                      <label className="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 cursor-pointer font-semibold text-sm flex items-center gap-2">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                         </svg>
@@ -154,7 +154,7 @@ export default function DocumentVersions({ caseId }: DocumentVersionsProps) {
                   ) : (
                     <div className="space-y-3 max-h-96 overflow-y-auto">
                       {/* Current Version */}
-                      <div className="p-3 border-2 border-blue-300 rounded-lg bg-blue-50">
+                      <div className="p-3 border-2 border-orange-300 rounded-lg bg-orange-50">
                         <div className="flex justify-between items-center">
                           <div>
                             <p className="font-semibold text-gray-900">גרסה נוכחית {selectedDoc.version}</p>
@@ -166,7 +166,7 @@ export default function DocumentVersions({ caseId }: DocumentVersionsProps) {
                               })}
                             </p>
                           </div>
-                          <span className="px-2 py-1 text-xs rounded bg-blue-600 text-white">
+                          <span className="px-2 py-1 text-xs rounded bg-orange-600 text-white">
                             נוכחי
                           </span>
                         </div>
@@ -200,7 +200,7 @@ export default function DocumentVersions({ caseId }: DocumentVersionsProps) {
                               </div>
                               <button
                                 onClick={() => handleDownloadVersion(version._id, selectedDoc.originalName)}
-                                className="text-blue-600 hover:text-blue-700 p-1"
+                                className="text-orange-600 hover:text-orange-700 p-1"
                                 title="הורד גרסה"
                               >
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

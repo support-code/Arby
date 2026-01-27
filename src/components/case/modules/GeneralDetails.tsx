@@ -9,8 +9,13 @@ interface GeneralDetailsProps {
 
 export default function GeneralDetails({ caseData }: GeneralDetailsProps) {
   const statusConfig = getStatusConfig(caseData.status);
-  const arbitratorName = typeof caseData.arbitratorId === 'object' && caseData.arbitratorId
-    ? caseData.arbitratorId.name
+  // Get arbitrator name from arbitratorIds array
+  const arbitratorName = caseData.arbitratorIds && Array.isArray(caseData.arbitratorIds) && caseData.arbitratorIds.length > 0
+    ? (typeof caseData.arbitratorIds[0] === 'object' && caseData.arbitratorIds[0]?.name 
+       ? caseData.arbitratorIds[0].name 
+       : caseData.arbitratorIds.length > 1 
+         ? `${caseData.arbitratorIds.length} בוררים`
+         : 'בורר')
     : 'לא הוגדר';
 
   return (
@@ -22,12 +27,14 @@ export default function GeneralDetails({ caseData }: GeneralDetailsProps) {
             <span className="text-gray-600 text-sm block mb-1">כותרת התיק:</span>
             <p className="font-semibold text-gray-900 text-lg">{caseData.title}</p>
           </div>
-          {caseData.caseNumber && (
-            <div>
-              <span className="text-gray-600 text-sm block mb-1">מספר תיק:</span>
-              <p className="font-semibold text-gray-900">{caseData.caseNumber}</p>
-            </div>
-          )}
+          <div>
+            <span className="text-gray-600 text-sm block mb-1">מספר תיק:</span>
+            {caseData.caseNumber ? (
+              <p className="font-semibold text-gray-900 font-mono text-lg">{caseData.caseNumber}</p>
+            ) : (
+              <p className="text-gray-400 italic">טרם הוקצה מספר תיק</p>
+            )}
+          </div>
           {caseData.description && (
             <div className="md:col-span-2">
               <span className="text-gray-600 text-sm block mb-1">תיאור:</span>

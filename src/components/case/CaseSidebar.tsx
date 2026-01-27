@@ -363,7 +363,7 @@ export default function CaseSidebar({ activeModule, onModuleChange, badges = {} 
                         </span>
                         <span className="flex-1 text-right">{item.label}</span>
                         {badgeCount > 0 && (
-                          <span className="bg-blue-500 text-white text-xs px-2 py-0.5 rounded-full">
+                          <span className="bg-orange-500 text-white text-xs px-2 py-0.5 rounded-full">
                             {badgeCount}
                           </span>
                         )}

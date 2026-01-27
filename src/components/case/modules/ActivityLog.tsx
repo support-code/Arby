@@ -122,7 +122,7 @@ export default function ActivityLog({ caseId }: ActivityLogProps) {
                   key={log._id}
                   className="flex gap-4 p-4 border border-gray-200 rounded-lg hover:bg-gray-50"
                 >
-                  <div className="flex-shrink-0 w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-lg">
+                  <div className="flex-shrink-0 w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center text-lg">
                     {actionIcon}
                   </div>
                   <div className="flex-1">

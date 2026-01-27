@@ -1,0 +1,400 @@
+{
+  "name": "Arbitra AI Design System",
+  "version": "1.0.0",
+  "mode": "light",
+  "description": "Sunset orange/yellow gradient design system for Arbitra AI dashboard",
+  "typography": {
+    "fontFamily": {
+      "primary": "Heebo",
+      "fallback": "sans-serif",
+      "import": "https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap",
+      "weights": [300, 400, 500, 600, 700, 800, 900]
+    }
+  },
+  "colors": {
+    "primary": {
+      "name": "Sunset Orange",
+      "hsl": "28 100% 55%",
+      "hex": "#FF8C1A",
+      "rgb": {
+        "r": 255,
+        "g": 140,
+        "b": 26,
+        "string": "rgb(255, 140, 26)"
+      },
+      "foreground": {
+        "name": "Dark Charcoal",
+        "hsl": "20 14% 4%",
+        "hex": "#0F0A08",
+        "rgb": {
+          "r": 15,
+          "g": 10,
+          "b": 8,
+          "string": "rgb(15, 10, 8)"
+        }
+      }
+    },
+    "secondary": {
+      "name": "Golden Yellow",
+      "hsl": "40 100% 65%",
+      "hex": "#FFCC33",
+      "rgb": {
+        "r": 255,
+        "g": 204,
+        "b": 51,
+        "string": "rgb(255, 204, 51)"
+      },
+      "foreground": {
+        "name": "Dark Charcoal",
+        "hsl": "20 14% 4%",
+        "hex": "#0F0A08",
+        "rgb": {
+          "r": 15,
+          "g": 10,
+          "b": 8,
+          "string": "rgb(15, 10, 8)"
+        }
+      }
+    },
+    "accent": {
+      "name": "Amber",
+      "hsl": "35 100% 60%",
+      "hex": "#FFAD33",
+      "rgb": {
+        "r": 255,
+        "g": 173,
+        "b": 51,
+        "string": "rgb(255, 173, 51)"
+      },
+      "foreground": {
+        "name": "Dark Charcoal",
+        "hsl": "20 14% 4%",
+        "hex": "#0F0A08",
+        "rgb": {
+          "r": 15,
+          "g": 10,
+          "b": 8,
+          "string": "rgb(15, 10, 8)"
+        }
+      }
+    },
+    "sunset": {
+      "orange": {
+        "name": "Sunset Orange",
+        "hsl": "28 100% 55%",
+        "hex": "#FF8C1A",
+        "rgb": {
+          "r": 255,
+          "g": 140,
+          "b": 26,
+          "string": "rgb(255, 140, 26)"
+        }
+      },
+      "amber": {
+        "name": "Sunset Amber",
+        "hsl": "35 100% 60%",
+        "hex": "#FFAD33",
+        "rgb": {
+          "r": 255,
+          "g": 173,
+          "b": 51,
+          "string": "rgb(255, 173, 51)"
+        }
+      },
+      "yellow": {
+        "name": "Sunset Yellow",
+        "hsl": "45 100% 65%",
+        "hex": "#FFD633",
+        "rgb": {
+          "r": 255,
+          "g": 214,
+          "b": 51,
+          "string": "rgb(255, 214, 51)"
+        }
+      },
+      "gold": {
+        "name": "Sunset Gold",
+        "hsl": "40 100% 50%",
+        "hex": "#FFAA00",
+        "rgb": {
+          "r": 255,
+          "g": 170,
+          "b": 0,
+          "string": "rgb(255, 170, 0)"
+        }
+      }
+    },
+    "background": {
+      "name": "Cream White",
+      "hsl": "40 100% 97%",
+      "hex": "#FFFDF5",
+      "rgb": {
+        "r": 255,
+        "g": 253,
+        "b": 245,
+        "string": "rgb(255, 253, 245)"
+      }
+    },
+    "foreground": {
+      "name": "Dark Charcoal Text",
+      "hsl": "20 14% 15%",
+      "hex": "#1F1A17",
+      "rgb": {
+        "r": 31,
+        "g": 26,
+        "b": 23,
+        "string": "rgb(31, 26, 23)"
+      }
+    },
+    "card": {
+      "name": "Light Cream Card",
+      "hsl": "40 50% 98%",
+      "hex": "#FFFEF9",
+      "rgb": {
+        "r": 255,
+        "g": 254,
+        "b": 249,
+        "string": "rgb(255, 254, 249)"
+      },
+      "foreground": {
+        "name": "Dark Charcoal Text",
+        "hsl": "20 14% 15%",
+        "hex": "#1F1A17",
+        "rgb": {
+          "r": 31,
+          "g": 26,
+          "b": 23,
+          "string": "rgb(31, 26, 23)"
+        }
+      }
+    },
+    "muted": {
+      "name": "Light Gray",
+      "hsl": "40 20% 92%",
+      "hex": "#F0EDE5",
+      "rgb": {
+        "r": 240,
+        "g": 237,
+        "b": 229,
+        "string": "rgb(240, 237, 229)"
+      },
+      "foreground": {
+        "name": "Medium Gray Text",
+        "hsl": "20 10% 45%",
+        "hex": "#6B6660",
+        "rgb": {
+          "r": 107,
+          "g": 102,
+          "b": 96,
+          "string": "rgb(107, 102, 96)"
+        }
+      }
+    },
+    "border": {
+      "name": "Warm Light Border",
+      "hsl": "35 30% 85%",
+      "hex": "#E8DDC8",
+      "rgb": {
+        "r": 232,
+        "g": 221,
+        "b": 200,
+        "string": "rgb(232, 221, 200)"
+      }
+    },
+    "input": {
+      "name": "Input Background",
+      "hsl": "35 30% 90%",
+      "hex": "#F5EDE0",
+      "rgb": {
+        "r": 245,
+        "g": 237,
+        "b": 224,
+        "string": "rgb(245, 237, 224)"
+      }
+    },
+    "ring": {
+      "name": "Orange Focus Ring",
+      "hsl": "28 100% 55%",
+      "hex": "#FF8C1A",
+      "rgb": {
+        "r": 255,
+        "g": 140,
+        "b": 26,
+        "string": "rgb(255, 140, 26)"
+      }
+    }
+  },
+  "gradients": {
+    "sunset": {
+      "name": "Main Sunset Gradient",
+      "direction": "135deg",
+      "stops": [
+        {
+          "position": "0%",
+          "color": "hsl(28 100% 55%)",
+          "hex": "#FF8C1A",
+          "rgb": "rgb(255, 140, 26)"
+        },
+        {
+          "position": "50%",
+          "color": "hsl(35 100% 60%)",
+          "hex": "#FFAD33",
+          "rgb": "rgb(255, 173, 51)"
+        },
+        {
+          "position": "100%",
+          "color": "hsl(45 100% 65%)",
+          "hex": "#FFD633",
+          "rgb": "rgb(255, 214, 51)"
+        }
+      ],
+      "css": "linear-gradient(135deg, hsl(28 100% 55%) 0%, hsl(35 100% 60%) 50%, hsl(45 100% 65%) 100%)"
+    },
+    "vertical": {
+      "name": "Vertical Gradient for Buttons",
+      "direction": "180deg",
+      "stops": [
+        {
+          "position": "0%",
+          "color": "hsl(28 100% 55%)",
+          "hex": "#FF8C1A",
+          "rgb": "rgb(255, 140, 26)"
+        },
+        {
+          "position": "100%",
+          "color": "hsl(40 100% 55%)",
+          "hex": "#FFB31A",
+          "rgb": "rgb(255, 179, 26)"
+        }
+      ],
+      "css": "linear-gradient(180deg, hsl(28 100% 55%) 0%, hsl(40 100% 55%) 100%)"
+    },
+    "lightBg": {
+      "name": "Subtle Background Gradient",
+      "direction": "135deg",
+      "stops": [
+        {
+          "position": "0%",
+          "color": "hsl(40 100% 98%)",
+          "hex": "#FFFEF9",
+          "rgb": "rgb(255, 254, 249)"
+        },
+        {
+          "position": "50%",
+          "color": "hsl(35 50% 95%)",
+          "hex": "#F8F3E8",
+          "rgb": "rgb(248, 243, 232)"
+        },
+        {
+          "position": "100%",
+          "color": "hsl(40 100% 98%)",
+          "hex": "#FFFEF9",
+          "rgb": "rgb(255, 254, 249)"
+        }
+      ],
+      "css": "linear-gradient(135deg, hsl(40 100% 98%) 0%, hsl(35 50% 95%) 50%, hsl(40 100% 98%) 100%)"
+    }
+  },
+  "shadows": {
+    "glowOrange": {
+      "name": "Orange Glow",
+      "css": "0 0 60px hsl(28 100% 55% / 0.3)",
+      "rgb": "0 0 60px rgba(255, 140, 26, 0.3)"
+    },
+    "button": {
+      "name": "Button Shadow",
+      "css": "0 4px 20px hsl(28 100% 55% / 0.4)",
+      "rgb": "0 4px 20px rgba(255, 140, 26, 0.4)"
+    },
+    "card": {
+      "name": "Card Shadow (Light Mode)",
+      "css": "0 4px 30px hsl(28 100% 55% / 0.1)",
+      "rgb": "0 4px 30px rgba(255, 140, 26, 0.1)"
+    }
+  },
+  "effects": {
+    "glassCard": {
+      "name": "Glass Card (Light Mode)",
+      "background": {
+        "hsl": "hsl(40 50% 98% / 0.9)",
+        "rgb": "rgba(255, 254, 249, 0.9)"
+      },
+      "backdropFilter": "blur(20px)",
+      "border": {
+        "default": {
+          "hsl": "1px solid hsl(28 100% 55% / 0.15)",
+          "rgb": "1px solid rgba(255, 140, 26, 0.15)"
+        },
+        "hover": {
+          "hsl": "1px solid hsl(28 100% 55% / 0.3)",
+          "rgb": "1px solid rgba(255, 140, 26, 0.3)"
+        }
+      },
+      "hover": {
+        "background": {
+          "hsl": "hsl(40 50% 100% / 0.95)",
+          "rgb": "rgba(255, 255, 255, 0.95)"
+        },
+        "shadow": {
+          "hsl": "0 0 30px hsl(28 100% 55% / 0.15)",
+          "rgb": "0 0 30px rgba(255, 140, 26, 0.15)"
+        }
+      }
+    }
+  },
+  "animations": {
+    "pulseGlow": {
+      "name": "Pulse Glow Animation",
+      "duration": "2s",
+      "timing": "ease-in-out",
+      "iteration": "infinite",
+      "keyframes": {
+        "0%, 100%": {
+          "shadow": {
+            "hsl": "0 0 20px hsl(28 100% 55% / 0.2)",
+            "rgb": "0 0 20px rgba(255, 140, 26, 0.2)"
+          }
+        },
+        "50%": {
+          "shadow": {
+            "hsl": "0 0 40px hsl(28 100% 55% / 0.4)",
+            "rgb": "0 0 40px rgba(255, 140, 26, 0.4)"
+          }
+        }
+      }
+    }
+  },
+  "cssVariables": {
+    "primary": "--primary: 28 100% 55%;",
+    "primaryForeground": "--primary-foreground: 20 14% 4%;",
+    "secondary": "--secondary: 40 100% 65%;",
+    "secondaryForeground": "--secondary-foreground: 20 14% 4%;",
+    "accent": "--accent: 35 100% 60%;",
+    "accentForeground": "--accent-foreground: 20 14% 4%;",
+    "sunsetOrange": "--sunset-orange: 28 100% 55%;",
+    "sunsetAmber": "--sunset-amber: 35 100% 60%;",
+    "sunsetYellow": "--sunset-yellow: 45 100% 65%;",
+    "sunsetGold": "--sunset-gold: 40 100% 50%;",
+    "background": "--background: 40 100% 97%;",
+    "foreground": "--foreground: 20 14% 15%;",
+    "card": "--card: 40 50% 98%;",
+    "cardForeground": "--card-foreground: 20 14% 15%;",
+    "muted": "--muted: 40 20% 92%;",
+    "mutedForeground": "--muted-foreground: 20 10% 45%;",
+    "border": "--border: 35 30% 85%;",
+    "input": "--input: 35 30% 90%;",
+    "ring": "--ring: 28 100% 55%;"
+  },
+  "designPrinciples": [
+    "Use cream/white backgrounds with warm tint",
+    "Orange as primary action color",
+    "Gradient buttons and accents",
+    "Subtle orange glows on hover",
+    "Warm borders (not pure gray)",
+    "RTL support for Hebrew"
+  ]
+}
+
+
+
+

@@ -138,7 +138,7 @@ export default function Tasks({ caseId, caseData }: TasksProps) {
       case TaskPriority.MEDIUM:
         return 'bg-yellow-100 text-yellow-700 border-yellow-300';
       case TaskPriority.LOW:
-        return 'bg-blue-100 text-blue-700 border-blue-300';
+        return 'bg-orange-100 text-orange-700 border-orange-300';
       default:
         return 'bg-gray-100 text-gray-700 border-gray-300';
     }
@@ -189,7 +189,7 @@ export default function Tasks({ caseId, caseData }: TasksProps) {
           <h2 className="text-xl font-bold text-gray-900">משימות</h2>
           <button
             onClick={() => setShowForm(!showForm)}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-semibold flex items-center gap-2"
+            className="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 font-semibold flex items-center gap-2"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -200,7 +200,7 @@ export default function Tasks({ caseId, caseData }: TasksProps) {
 
         {/* Create Task Form */}
         {showForm && (
-          <form onSubmit={handleSubmit} className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+          <form onSubmit={handleSubmit} className="mb-6 p-4 bg-orange-50 rounded-lg border border-orange-200">
             <h3 className="font-semibold text-gray-900 mb-4">יצירת משימה חדשה</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="md:col-span-2">
@@ -267,7 +267,7 @@ export default function Tasks({ caseId, caseData }: TasksProps) {
               <button
                 type="submit"
                 disabled={submitting}
-                className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 font-semibold disabled:opacity-50"
+                className="bg-orange-600 text-white px-6 py-2 rounded-lg hover:bg-orange-700 font-semibold disabled:opacity-50"
               >
                 {submitting ? 'יוצר...' : 'צור משימה'}
               </button>
@@ -297,7 +297,7 @@ export default function Tasks({ caseId, caseData }: TasksProps) {
             onClick={() => setFilter('all')}
             className={`px-4 py-2 font-semibold transition-colors ${
               filter === 'all'
-                ? 'text-blue-600 border-b-2 border-blue-600'
+                ? 'text-orange-600 border-b-2 border-orange-600'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >
@@ -307,7 +307,7 @@ export default function Tasks({ caseId, caseData }: TasksProps) {
             onClick={() => setFilter('pending')}
             className={`px-4 py-2 font-semibold transition-colors ${
               filter === 'pending'
-                ? 'text-blue-600 border-b-2 border-blue-600'
+                ? 'text-orange-600 border-b-2 border-orange-600'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >
@@ -317,7 +317,7 @@ export default function Tasks({ caseId, caseData }: TasksProps) {
             onClick={() => setFilter('completed')}
             className={`px-4 py-2 font-semibold transition-colors ${
               filter === 'completed'
-                ? 'text-blue-600 border-b-2 border-blue-600'
+                ? 'text-orange-600 border-b-2 border-orange-600'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >
@@ -345,7 +345,7 @@ export default function Tasks({ caseId, caseData }: TasksProps) {
                   key={task._id}
                   className={`p-4 border rounded-lg transition-all ${
                     isMine
-                      ? 'border-blue-300 bg-blue-50'
+                      ? 'border-orange-300 bg-orange-50'
                       : 'border-gray-200 hover:bg-gray-50'
                   }`}
                 >
@@ -361,7 +361,7 @@ export default function Tasks({ caseId, caseData }: TasksProps) {
                               e.target.checked ? TaskStatus.COMPLETED : TaskStatus.PENDING
                             )
                           }
-                          className="w-5 h-5 rounded text-blue-600"
+                          className="w-5 h-5 rounded text-orange-600"
                         />
                         <h3 className={`font-semibold ${task.status === TaskStatus.COMPLETED ? 'line-through text-gray-500' : 'text-gray-900'}`}>
                           {task.title}
@@ -370,7 +370,7 @@ export default function Tasks({ caseId, caseData }: TasksProps) {
                           {getPriorityLabel(task.priority)}
                         </span>
                         {isMine && (
-                          <span className="px-2 py-1 text-xs rounded bg-blue-200 text-blue-800">
+                          <span className="px-2 py-1 text-xs rounded bg-orange-200 text-orange-800">
                             שלי
                           </span>
                         )}

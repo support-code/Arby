@@ -354,7 +354,41 @@ export default function PDFAnnotatorDirect({ documentId, requestId, caseId, read
         
         // Reload annotations to get the saved one with _id
         const data = await annotationsAPI.getByDocument(requestId, documentId);
-        setAnnotations(data.filter(a => !a.isDeleted));
+        const updatedAnnotations = data.filter(a => !a.isDeleted);
+        setAnnotations(updatedAnnotations);
+        
+        // If it's a rectangle annotation, automatically open edit mode for text input
+        if (annotation.type === AnnotationType.RECTANGLE) {
+          // Try to use the saved annotation's _id first, otherwise find by coordinates
+          let annotationToEdit: Annotation | undefined;
+          
+          if (savedAnnotation && savedAnnotation._id) {
+            annotationToEdit = updatedAnnotations.find(a => a._id === savedAnnotation._id);
+          }
+          
+          // If not found by _id, find by coordinates and type (fallback)
+          if (!annotationToEdit) {
+            annotationToEdit = updatedAnnotations.find(a => 
+              a.type === AnnotationType.RECTANGLE &&
+              a.pageNumber === pageNum &&
+              Math.abs(a.x - annotation.x) < 0.01 &&
+              Math.abs(a.y - annotation.y) < 0.01 &&
+              Math.abs((a.width || 0) - (annotation.width || 0)) < 0.01 &&
+              Math.abs((a.height || 0) - (annotation.height || 0)) < 0.01
+            );
+          }
+          
+          if (annotationToEdit && annotationToEdit._id) {
+            // Use setTimeout to ensure the annotation is rendered before opening edit mode
+            setTimeout(() => {
+              setSelectedAnnotation(annotationToEdit!._id!);
+              setEditingAnnotation(annotationToEdit!._id!);
+              setTextContent(annotationToEdit!.content || '');
+              setTextAlign((annotationToEdit as any).textAlign || 'right');
+              setTextBold((annotationToEdit as any).textBold || false);
+            }, 100);
+          }
+        }
         
         if (onSave) {
           onSave();
@@ -465,12 +499,17 @@ export default function PDFAnnotatorDirect({ documentId, requestId, caseId, read
           <textarea
             value={textContent}
             onChange={(e) => setTextContent(e.target.value)}
-            onBlur={() => handleSaveText(annotation._id!)}
+            onBlur={() => {
+              if (annotation._id) {
+                handleSaveText(annotation._id);
+              }
+            }}
             onClick={(e) => e.stopPropagation()}
+            onFocus={(e) => e.stopPropagation()}
             onKeyDown={(e) => {
               e.stopPropagation();
-              if (e.key === 'Enter' && e.ctrlKey) {
-                handleSaveText(annotation._id!);
+              if (e.key === 'Enter' && e.ctrlKey && annotation._id) {
+                handleSaveText(annotation._id);
               }
               if (e.key === 'Escape') {
                 setEditingAnnotation(null);
@@ -481,6 +520,7 @@ export default function PDFAnnotatorDirect({ documentId, requestId, caseId, read
             style={{
               width: '100%',
               height: '100%',
+              minHeight: '20px',
               border: 'none',
               background: 'transparent',
               resize: 'none',
@@ -488,14 +528,16 @@ export default function PDFAnnotatorDirect({ documentId, requestId, caseId, read
               textAlign: textAlign,
               fontWeight: textBold ? 'bold' : 'normal',
               fontSize: '12px',
-              direction: 'rtl'
+              direction: 'rtl',
+              zIndex: 1000,
+              position: 'relative'
             }}
             dir="rtl"
             placeholder="הקלד טקסט כאן..."
             autoFocus
           />
         ) : (
-          annotation.content && (
+          annotation.content ? (
             <div
               style={{
                 width: '100%',
@@ -510,6 +552,24 @@ export default function PDFAnnotatorDirect({ documentId, requestId, caseId, read
               dir="rtl"
             >
               {annotation.content}
+            </div>
+          ) : (
+            // Show placeholder text when no content but annotation exists
+            <div
+              style={{
+                width: '100%',
+                height: '100%',
+                textAlign: 'center',
+                fontSize: '11px',
+                color: '#999',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                direction: 'rtl'
+              }}
+              dir="rtl"
+            >
+              לחץ לעריכה
             </div>
           )
         )}
@@ -634,13 +694,13 @@ export default function PDFAnnotatorDirect({ documentId, requestId, caseId, read
           <span className="text-sm font-semibold">כלי סימון:</span>
           <button
             onClick={() => setSelectedTool(AnnotationType.HIGHLIGHT)}
-            className={`px-3 py-1 rounded ${selectedTool === AnnotationType.HIGHLIGHT ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+            className={`px-3 py-1 rounded ${selectedTool === AnnotationType.HIGHLIGHT ? 'bg-orange-500 text-white' : 'bg-gray-200'}`}
           >
             הדגשה
           </button>
           <button
             onClick={() => setSelectedTool(AnnotationType.RECTANGLE)}
-            className={`px-3 py-1 rounded ${selectedTool === AnnotationType.RECTANGLE ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+            className={`px-3 py-1 rounded ${selectedTool === AnnotationType.RECTANGLE ? 'bg-orange-500 text-white' : 'bg-gray-200'}`}
           >
             מלבן
           </button>
@@ -656,28 +716,28 @@ export default function PDFAnnotatorDirect({ documentId, requestId, caseId, read
               <span className="text-sm font-semibold">עריכת טקסט:</span>
               <button
                 onClick={() => setTextAlign('right')}
-                className={`px-2 py-1 rounded text-sm ${textAlign === 'right' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                className={`px-2 py-1 rounded text-sm ${textAlign === 'right' ? 'bg-orange-500 text-white' : 'bg-gray-200'}`}
                 title="יישור ימין"
               >
                 ⟵
               </button>
               <button
                 onClick={() => setTextAlign('center')}
-                className={`px-2 py-1 rounded text-sm ${textAlign === 'center' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                className={`px-2 py-1 rounded text-sm ${textAlign === 'center' ? 'bg-orange-500 text-white' : 'bg-gray-200'}`}
                 title="יישור מרכז"
               >
                 ⟷
               </button>
               <button
                 onClick={() => setTextAlign('left')}
-                className={`px-2 py-1 rounded text-sm ${textAlign === 'left' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                className={`px-2 py-1 rounded text-sm ${textAlign === 'left' ? 'bg-orange-500 text-white' : 'bg-gray-200'}`}
                 title="יישור שמאל"
               >
                 ⟶
               </button>
               <button
                 onClick={() => setTextBold(!textBold)}
-                className={`px-2 py-1 rounded text-sm ${textBold ? 'bg-blue-500 text-white font-bold' : 'bg-gray-200'}`}
+                className={`px-2 py-1 rounded text-sm ${textBold ? 'bg-orange-500 text-white font-bold' : 'bg-gray-200'}`}
                 title="הדגשה"
               >
                 <strong>B</strong>
@@ -792,7 +852,7 @@ export default function PDFAnnotatorDirect({ documentId, requestId, caseId, read
             <div>
               <button
                 onClick={() => setShowReminderForm(!showReminderForm)}
-                className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                className="w-full px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600"
               >
                 הוסף תזכורת
               </button>
@@ -874,7 +934,7 @@ export default function PDFAnnotatorDirect({ documentId, requestId, caseId, read
       {!readOnly && caseId && !showSidebar && (
         <button
           onClick={() => setShowSidebar(true)}
-          className="fixed left-4 top-1/2 transform -translate-y-1/2 bg-blue-500 text-white px-3 py-2 rounded-l shadow-lg hover:bg-blue-600 z-10"
+          className="fixed left-4 top-1/2 transform -translate-y-1/2 bg-orange-500 text-white px-3 py-2 rounded-l shadow-lg hover:bg-orange-600 z-10"
         >
           אפשרויות ◄
         </button>

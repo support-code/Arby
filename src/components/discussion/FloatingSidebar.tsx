@@ -82,7 +82,7 @@ export default function FloatingSidebar({
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed right-4 top-1/2 -translate-y-1/2 z-50 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300"
+          className="fixed right-4 top-1/2 -translate-y-1/2 z-50 bg-orange-600 text-white p-4 rounded-full shadow-lg hover:bg-orange-700 transition-all duration-300"
           title="פתח סיידבר"
           style={{ direction: 'ltr' }}
         >
@@ -101,13 +101,13 @@ export default function FloatingSidebar({
       >
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-6">
+          <div className="bg-gradient-to-r from-orange-600 to-orange-700 text-white p-6">
             <div className="flex justify-between items-start mb-4">
               <div>
                 <h2 className="text-xl font-bold mb-2">{sessionTitle}</h2>
                 <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
                   sessionStatus === 'active' ? 'bg-green-100 text-green-800' :
-                  sessionStatus === 'completed' ? 'bg-blue-100 text-blue-800' :
+                  sessionStatus === 'completed' ? 'bg-orange-100 text-orange-800' :
                   'bg-gray-100 text-gray-800'
                 }`}>
                   {sessionStatus === 'active' ? 'פעיל' :
@@ -129,7 +129,7 @@ export default function FloatingSidebar({
               <button
                 onClick={() => setActiveTab('protocols')}
                 className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors whitespace-nowrap ${
-                  activeTab === 'protocols' ? 'bg-white text-blue-600' : 'bg-blue-500 text-white hover:bg-blue-400'
+                  activeTab === 'protocols' ? 'bg-white text-orange-600' : 'bg-orange-500 text-white hover:bg-orange-400'
                 }`}
               >
                 פרוטוקולים ({protocols.length})
@@ -137,7 +137,7 @@ export default function FloatingSidebar({
               <button
                 onClick={() => setActiveTab('documents')}
                 className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors whitespace-nowrap ${
-                  activeTab === 'documents' ? 'bg-white text-blue-600' : 'bg-blue-500 text-white hover:bg-blue-400'
+                  activeTab === 'documents' ? 'bg-white text-orange-600' : 'bg-orange-500 text-white hover:bg-orange-400'
                 }`}
               >
                 מסמכים ({documents.length})
@@ -145,7 +145,7 @@ export default function FloatingSidebar({
               <button
                 onClick={() => setActiveTab('decisions')}
                 className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors whitespace-nowrap ${
-                  activeTab === 'decisions' ? 'bg-white text-blue-600' : 'bg-blue-500 text-white hover:bg-blue-400'
+                  activeTab === 'decisions' ? 'bg-white text-orange-600' : 'bg-orange-500 text-white hover:bg-orange-400'
                 }`}
               >
                 החלטות ({decisions.length})
@@ -153,7 +153,7 @@ export default function FloatingSidebar({
               <button
                 onClick={() => setActiveTab('attendees')}
                 className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors whitespace-nowrap ${
-                  activeTab === 'attendees' ? 'bg-white text-blue-600' : 'bg-blue-500 text-white hover:bg-blue-400'
+                  activeTab === 'attendees' ? 'bg-white text-orange-600' : 'bg-orange-500 text-white hover:bg-orange-400'
                 }`}
               >
                 נוכחים ({attendees.length})
@@ -161,7 +161,7 @@ export default function FloatingSidebar({
               <button
                 onClick={() => setActiveTab('info')}
                 className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors whitespace-nowrap ${
-                  activeTab === 'info' ? 'bg-white text-blue-600' : 'bg-blue-500 text-white hover:bg-blue-400'
+                  activeTab === 'info' ? 'bg-white text-orange-600' : 'bg-orange-500 text-white hover:bg-orange-400'
                 }`}
               >
                 מידע
@@ -197,14 +197,14 @@ export default function FloatingSidebar({
                         }}
                         className={`p-4 rounded-lg border cursor-pointer transition-all ${
                           selectedProtocolId === protocol._id
-                            ? 'bg-blue-50 border-blue-400 shadow-md'
-                            : 'bg-gray-50 border-gray-200 hover:border-blue-300 hover:shadow-md'
+                            ? 'bg-orange-50 border-orange-400 shadow-md'
+                            : 'bg-gray-50 border-gray-200 hover:border-orange-300 hover:shadow-md'
                         }`}
                       >
                         <div className="flex justify-between items-start mb-2">
                           <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                              <span className="text-blue-600 font-bold text-sm">ג{protocol.version}</span>
+                            <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
+                              <span className="text-orange-600 font-bold text-sm">ג{protocol.version}</span>
                             </div>
                             <div>
                               <p className="font-semibold text-gray-900">גרסה {protocol.version}</p>
@@ -243,7 +243,7 @@ export default function FloatingSidebar({
                         onClick={() => setDocumentFilter('all')}
                         className={`px-3 py-1 rounded-lg text-sm transition-colors ${
                           documentFilter === 'all'
-                            ? 'bg-blue-600 text-white'
+                            ? 'bg-orange-600 text-white'
                             : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                         }`}
                       >
@@ -255,7 +255,7 @@ export default function FloatingSidebar({
                           onClick={() => setDocumentFilter(type as DocumentType)}
                           className={`px-3 py-1 rounded-lg text-sm transition-colors ${
                             documentFilter === type
-                              ? 'bg-blue-600 text-white'
+                              ? 'bg-orange-600 text-white'
                               : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                           }`}
                         >
@@ -281,7 +281,7 @@ export default function FloatingSidebar({
                         <div
                           key={document._id}
                           onClick={() => onDocumentClick?.(document)}
-                          className="p-3 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md cursor-pointer transition-all"
+                          className="p-3 bg-gray-50 rounded-lg border border-gray-200 hover:border-orange-300 hover:shadow-md cursor-pointer transition-all"
                         >
                           <div className="flex items-start gap-3">
                             <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -292,7 +292,7 @@ export default function FloatingSidebar({
                             <div className="flex-1 min-w-0">
                               <p className="font-semibold text-gray-900 truncate">{document.originalName}</p>
                               <div className="flex items-center gap-2 mt-1">
-                                <span className="text-xs px-2 py-0.5 bg-blue-100 text-blue-700 rounded">
+                                <span className="text-xs px-2 py-0.5 bg-orange-100 text-orange-700 rounded">
                                   {getDocumentTypeLabel(document.documentType)}
                                 </span>
                                 <span className="text-xs text-gray-500">{uploadedBy}</span>
@@ -334,8 +334,8 @@ export default function FloatingSidebar({
                       }}
                       className={`p-4 rounded-lg border cursor-pointer transition-all ${
                         selectedDecisionId === decision._id
-                          ? 'bg-blue-50 border-blue-400 shadow-md'
-                          : 'bg-gray-50 border-gray-200 hover:border-blue-300 hover:shadow-md'
+                          ? 'bg-orange-50 border-orange-400 shadow-md'
+                          : 'bg-gray-50 border-gray-200 hover:border-orange-300 hover:shadow-md'
                       }`}
                     >
                       <div className="flex justify-between items-start mb-2">
@@ -389,7 +389,7 @@ export default function FloatingSidebar({
                         key={index}
                         className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200"
                       >
-                        <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold text-lg">
+                        <div className="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-white font-semibold text-lg">
                           {attendee.name.charAt(0)}
                         </div>
                         <div className="flex-1">
@@ -406,9 +406,9 @@ export default function FloatingSidebar({
             {/* Info Tab */}
             {activeTab === 'info' && (
               <div className="space-y-4">
-                <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                <div className="p-4 bg-orange-50 rounded-lg border border-orange-200">
                   <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                    <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     מידע על הדיון

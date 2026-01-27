@@ -55,14 +55,22 @@ export default function Requests({ caseId }: RequestsProps) {
       const data = await requestsAPI.getByCase(caseId);
       setRequests(data);
       
-      // Load attachments for each request
+      // Load attachments for each request that has attachments
       const attachmentsMap: { [requestId: string]: Document[] } = {};
       for (const request of data) {
-        if (request.attachments && request.attachments.length > 0) {
+        // Try to load attachments if request has attachments array (even if empty, we'll try)
+        if (request.attachments !== undefined) {
           try {
             const attachments = await requestsAPI.getAttachments(request._id);
-            attachmentsMap[request._id] = attachments;
+            if (attachments && attachments.length > 0) {
+              attachmentsMap[request._id] = attachments;
+            }
           } catch (error: any) {
+            // If attachments endpoint fails, try to use attachments from request object
+            if (request.attachments && request.attachments.length > 0) {
+              // Keep the attachment IDs from request object as fallback
+              attachmentsMap[request._id] = request.attachments as Document[];
+            }
             console.error(`Failed to load attachments for request ${request._id}:`, error);
           }
         }
@@ -114,7 +122,7 @@ export default function Requests({ caseId }: RequestsProps) {
       case RequestStatus.REJECTED:
         return 'bg-red-100 text-red-700';
       case RequestStatus.UNDER_REVIEW:
-        return 'bg-blue-100 text-blue-700';
+        return 'bg-orange-100 text-orange-700';
       default:
         return 'bg-gray-100 text-gray-700';
     }
@@ -209,7 +217,7 @@ export default function Requests({ caseId }: RequestsProps) {
           <h2 className="text-xl font-bold text-gray-900">בקשות</h2>
           <button
             onClick={() => setShowForm(!showForm)}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-semibold flex items-center gap-2"
+            className="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 font-semibold flex items-center gap-2"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -220,7 +228,7 @@ export default function Requests({ caseId }: RequestsProps) {
 
         {/* Create Request Form */}
         {showForm && (
-          <form onSubmit={handleSubmit} className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+          <form onSubmit={handleSubmit} className="mb-6 p-4 bg-orange-50 rounded-lg border border-orange-200">
             <h3 className="font-semibold text-gray-900 mb-4">יצירת בקשה חדשה</h3>
             <div className="space-y-4">
               <div>
@@ -287,7 +295,7 @@ export default function Requests({ caseId }: RequestsProps) {
               <button
                 type="submit"
                 disabled={submitting}
-                className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 font-semibold disabled:opacity-50"
+                className="bg-orange-600 text-white px-6 py-2 rounded-lg hover:bg-orange-700 font-semibold disabled:opacity-50"
               >
                 {submitting ? 'יוצר...' : 'שלח בקשה'}
               </button>
@@ -341,7 +349,7 @@ export default function Requests({ caseId }: RequestsProps) {
                       </div>
                       <p className="text-gray-600 mb-3">{request.content}</p>
                       {request.response && (
-                        <div className="bg-gray-50 p-3 rounded-lg mb-3 border-r-4 border-blue-500">
+                        <div className="bg-gray-50 p-3 rounded-lg mb-3 border-r-4 border-orange-500">
                           <p className="text-sm font-semibold text-gray-700 mb-1">תגובה:</p>
                           <p className="text-gray-600">{request.response}</p>
                         </div>
@@ -373,7 +381,7 @@ export default function Requests({ caseId }: RequestsProps) {
                                   {canRespond && (
                                     <button
                                       onClick={() => setViewingPdf({ requestId: request._id, documentId: docId })}
-                                      className="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600"
+                                      className="bg-orange-500 text-white px-3 py-1 rounded text-sm hover:bg-orange-600"
                                     >
                                       סמן PDF
                                     </button>
@@ -395,7 +403,27 @@ export default function Requests({ caseId }: RequestsProps) {
                       {canRespond && request.status === RequestStatus.PENDING && (
                         <div className="mt-3">
                           <button
-                            onClick={() => setShowDecisionForm(request._id)}
+                            onClick={async () => {
+                              setShowDecisionForm(request._id);
+                              // Always try to load attachments when opening decision form
+                              if (!requestAttachments[request._id] || requestAttachments[request._id].length === 0) {
+                                try {
+                                  const attachments = await requestsAPI.getAttachments(request._id);
+                                  if (attachments && attachments.length > 0) {
+                                    setRequestAttachments(prev => ({ ...prev, [request._id]: attachments }));
+                                  } else if (request.attachments && request.attachments.length > 0) {
+                                    // Fallback: use attachments from request object
+                                    setRequestAttachments(prev => ({ ...prev, [request._id]: request.attachments as Document[] }));
+                                  }
+                                } catch (error: any) {
+                                  console.error(`Failed to load attachments for request ${request._id}:`, error);
+                                  // Fallback: use attachments from request object if API fails
+                                  if (request.attachments && request.attachments.length > 0) {
+                                    setRequestAttachments(prev => ({ ...prev, [request._id]: request.attachments as Document[] }));
+                                  }
+                                }
+                              }
+                            }}
                             className="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 text-sm font-semibold"
                           >
                             יצירת החלטה
@@ -406,6 +434,68 @@ export default function Requests({ caseId }: RequestsProps) {
                         <div className="mt-4 p-4 bg-purple-50 rounded-lg border border-purple-200">
                           <h4 className="font-semibold text-gray-900 mb-3">יצירת החלטה על הבקשה</h4>
                           <div className="space-y-3">
+                            {/* Show request attachments - always show if request has attachments */}
+                            {request.attachments && request.attachments.length > 0 && (
+                              <div className="mb-4 p-3 bg-white rounded-lg border border-purple-300">
+                                <p className="text-sm font-semibold text-gray-700 mb-2">מסמכים מצורפים לבקשה:</p>
+                                <div className="space-y-2">
+                                  {requestAttachments[request._id] && requestAttachments[request._id].length > 0 ? (
+                                    // Show loaded attachments with full details
+                                    requestAttachments[request._id].map((attachment) => {
+                                      const docId = typeof attachment === 'string' ? attachment : attachment._id;
+                                      const docName = typeof attachment === 'string' ? 'מסמך' : attachment.originalName;
+                                      return (
+                                        <div key={docId} className="flex items-center justify-between p-2 bg-gray-50 rounded border border-gray-200 hover:bg-gray-100 transition-colors">
+                                          <span className="text-sm text-gray-700 flex items-center gap-2">
+                                            <svg className="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                                            </svg>
+                                            {docName}
+                                          </span>
+                                          <button
+                                            type="button"
+                                            onClick={() => setViewingPdf({ requestId: request._id, documentId: docId })}
+                                            className="bg-orange-500 text-white px-3 py-1 rounded text-sm hover:bg-orange-600 flex items-center gap-1 transition-colors"
+                                          >
+                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                            </svg>
+                                            סמן PDF
+                                          </button>
+                                        </div>
+                                      );
+                                    })
+                                  ) : (
+                                    // Show attachment IDs from request while loading
+                                    request.attachments.map((attachmentId, idx) => {
+                                      const docId = typeof attachmentId === 'string' ? attachmentId : (typeof attachmentId === 'object' ? (attachmentId._id || attachmentId) : attachmentId);
+                                      const docName = typeof attachmentId === 'object' && attachmentId.originalName ? attachmentId.originalName : 'מסמך PDF';
+                                      return (
+                                        <div key={docId || idx} className="flex items-center justify-between p-2 bg-gray-50 rounded border border-gray-200 hover:bg-gray-100 transition-colors">
+                                          <span className="text-sm text-gray-700 flex items-center gap-2">
+                                            <svg className="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                                            </svg>
+                                            {docName}
+                                          </span>
+                                          <button
+                                            type="button"
+                                            onClick={() => setViewingPdf({ requestId: request._id, documentId: docId })}
+                                            className="bg-orange-500 text-white px-3 py-1 rounded text-sm hover:bg-orange-600 flex items-center gap-1 transition-colors"
+                                          >
+                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                            </svg>
+                                            סמן PDF
+                                          </button>
+                                        </div>
+                                      );
+                                    })
+                                  )}
+                                </div>
+                                <p className="text-xs text-gray-500 mt-2">ניתן לסמן את המסמכים לפני יצירת ההחלטה</p>
+                              </div>
+                            )}
                             <div>
                               <label className="block text-sm font-semibold text-gray-700 mb-1">סוג החלטה</label>
                               <select

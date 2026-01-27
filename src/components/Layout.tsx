@@ -1,11 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/authStore';
 import { UserRole } from '@/types';
 import { ToastContainer } from '@/components/ui/Toast';
 import { useToastStore } from '@/store/toastStore';
+import Image from 'next/image';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -65,8 +66,14 @@ export default function Layout({ children, allowedRoles }: LayoutProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
-              <a href="/" className="text-xl font-bold text-blue-600">
-                Negotify
+              <a href="/" className="flex items-center">
+                <Image 
+                  src="/images/logo.PNG" 
+                  alt="Negotify" 
+                  width={120} 
+                  height={40}
+                  className="h-10 w-auto"
+                />
               </a>
             </div>
             <div className="flex items-center space-x-4 space-x-reverse">

@@ -128,7 +128,7 @@ export default function HearingCalendar({ caseId }: HearingCalendarProps) {
                 key={day}
                 className={`aspect-square border rounded-lg p-1 ${
                   isToday
-                    ? 'bg-blue-100 border-blue-400'
+                    ? 'bg-orange-100 border-orange-400'
                     : dayHearings.length > 0
                     ? 'bg-yellow-50 border-yellow-300'
                     : 'border-gray-200 hover:bg-gray-50'
@@ -140,7 +140,7 @@ export default function HearingCalendar({ caseId }: HearingCalendarProps) {
                     {dayHearings.slice(0, 2).map((hearing) => (
                       <div
                         key={hearing._id}
-                        className="text-xs bg-blue-600 text-white px-1 rounded truncate"
+                        className="text-xs bg-orange-600 text-white px-1 rounded truncate"
                         title={new Date(hearing.scheduledDate).toLocaleTimeString('he-IL', {
                           hour: '2-digit',
                           minute: '2-digit'
@@ -165,7 +165,7 @@ export default function HearingCalendar({ caseId }: HearingCalendarProps) {
         {/* Legend */}
         <div className="mt-6 flex items-center gap-4 text-sm">
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 bg-blue-100 border border-blue-400 rounded"></div>
+            <div className="w-4 h-4 bg-orange-100 border border-orange-400 rounded"></div>
             <span>היום</span>
           </div>
           <div className="flex items-center gap-2">

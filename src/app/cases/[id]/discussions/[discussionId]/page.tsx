@@ -584,7 +584,7 @@ export default function DiscussionSessionPage() {
                     )}
                     <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
                       session.status === 'active' ? 'bg-green-100 text-green-700' :
-                      session.status === 'completed' || session.status === 'ended' ? 'bg-blue-100 text-blue-700' :
+                      session.status === 'completed' || session.status === 'ended' ? 'bg-orange-100 text-orange-700' :
                       session.status === 'signed' ? 'bg-purple-100 text-purple-700' :
                       session.status === 'created' ? 'bg-yellow-100 text-yellow-700' :
                       'bg-gray-100 text-gray-700'
@@ -596,11 +596,11 @@ export default function DiscussionSessionPage() {
                     </span>
                     {/* Timer */}
                     {session.status === 'active' && (
-                      <div className="flex items-center gap-2 bg-blue-50 px-3 py-1 rounded-full">
-                        <svg className="w-5 h-5 text-blue-600 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="flex items-center gap-2 bg-orange-50 px-3 py-1 rounded-full">
+                        <svg className="w-5 h-5 text-orange-600 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        <span className="font-mono font-bold text-blue-700">{formatTime(elapsedTime)}</span>
+                        <span className="font-mono font-bold text-orange-700">{formatTime(elapsedTime)}</span>
                       </div>
                     )}
                     {/* Duration for completed sessions */}
@@ -653,7 +653,7 @@ export default function DiscussionSessionPage() {
                           alert(`שגיאה בחתימה על הפרוטוקול: ${error.response?.data?.message || error.message}`);
                         }
                       }}
-                      className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-semibold"
+                      className="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 font-semibold"
                     >
                       חתום על הפרוטוקול
                     </button>
@@ -663,7 +663,7 @@ export default function DiscussionSessionPage() {
                     <div className="flex gap-2">
                       <button
                         onClick={handleExportToWord}
-                        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-semibold flex items-center gap-2 text-sm"
+                        className="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 font-semibold flex items-center gap-2 text-sm"
                         title="ייצוא לוורד"
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -715,7 +715,7 @@ export default function DiscussionSessionPage() {
                   onClick={() => {
                     setShowAddAttendee(!showAddAttendee);
                   }}
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-semibold flex items-center gap-2"
+                  className="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 font-semibold flex items-center gap-2"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -726,7 +726,7 @@ export default function DiscussionSessionPage() {
             </div>
             
             {showAddAttendee && canEdit && (session.status === 'active' || session.status === 'created') && (
-              <div className="mb-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+              <div className="mb-4 p-4 bg-orange-50 rounded-lg border border-orange-200">
                 <div className="mb-3">
                   <label className="block text-sm font-semibold text-gray-700 mb-1">סוג נוכח:</label>
                   <select
@@ -754,7 +754,7 @@ export default function DiscussionSessionPage() {
                 <div className="flex gap-2">
                   <button
                     onClick={handleAddAttendee}
-                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-semibold"
+                    className="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 font-semibold"
                   >
                     הוסף
                   </button>
@@ -781,7 +781,7 @@ export default function DiscussionSessionPage() {
                     className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold">
+                      <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center text-white font-semibold">
                         {attendee.name.charAt(0)}
                       </div>
                       <div>
@@ -833,7 +833,7 @@ export default function DiscussionSessionPage() {
               <div className="flex gap-2">
                 <button
                   onClick={() => setShowDecisionForm(!showDecisionForm)}
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-semibold flex items-center gap-2"
+                  className="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 font-semibold flex items-center gap-2"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -876,9 +876,9 @@ export default function DiscussionSessionPage() {
             
             {/* Decision Form Accordion - Above Protocol */}
             {showDecisionForm && (
-              <div className="mb-6 p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg border-2 border-blue-200 shadow-md">
+              <div className="mb-6 p-6 bg-gradient-to-br from-orange-50 to-amber-50 rounded-lg border-2 border-orange-200 shadow-md">
                 <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                  <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                   יצירת החלטה חדשה
@@ -892,7 +892,7 @@ export default function DiscussionSessionPage() {
                       value={decisionTitle}
                       onChange={(e) => setDecisionTitle(e.target.value)}
                       placeholder="הזן כותרת החלטה"
-                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                     />
                   </div>
                   
@@ -902,7 +902,7 @@ export default function DiscussionSessionPage() {
                       value={decisionContent}
                       onChange={(e) => setDecisionContent(e.target.value)}
                       placeholder="הזן תוכן החלטה"
-                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                       rows={4}
                     />
                   </div>
@@ -921,7 +921,7 @@ export default function DiscussionSessionPage() {
                 <div className="flex gap-2 mt-6">
                   <button
                     onClick={handleCreateDecision}
-                    className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 font-semibold flex items-center gap-2"
+                    className="bg-orange-600 text-white px-6 py-3 rounded-lg hover:bg-orange-700 font-semibold flex items-center gap-2"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />

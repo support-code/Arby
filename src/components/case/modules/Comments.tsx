@@ -91,7 +91,7 @@ export default function Comments({ caseId }: CommentsProps) {
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
             placeholder="הוסף תגובה..."
-            className="w-full p-3 border border-gray-300 rounded-lg mb-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full p-3 border border-gray-300 rounded-lg mb-3 focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
             rows={3}
           />
           <div className="flex items-center justify-between">
@@ -108,7 +108,7 @@ export default function Comments({ caseId }: CommentsProps) {
             )}
             <button
               type="submit"
-              className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 font-semibold"
+              className="bg-orange-600 text-white px-6 py-2 rounded-lg hover:bg-orange-700 font-semibold"
             >
               הוסף תגובה
             </button>

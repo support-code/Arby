@@ -204,11 +204,11 @@ export default function Documents({ caseId, caseData }: DocumentsProps) {
     <div className="space-y-6">
       <div className="bg-white rounded-lg shadow p-6 border border-gray-200">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-bold text-gray-900 border-b-2 border-blue-500 pb-2">מסמכי התיק</h2>
+          <h2 className="text-xl font-bold text-gray-900 border-b-2 border-orange-500 pb-2">מסמכי התיק</h2>
           {canUpload && (
             <button
               onClick={() => setShowForm(!showForm)}
-              className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 font-semibold flex items-center gap-2 transition-colors"
+              className="bg-orange-600 text-white px-6 py-2 rounded-lg hover:bg-orange-700 font-semibold flex items-center gap-2 transition-colors"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -220,7 +220,7 @@ export default function Documents({ caseId, caseData }: DocumentsProps) {
 
         {/* Upload Form */}
         {showForm && canUpload && (
-          <form onSubmit={handleSubmit} className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+          <form onSubmit={handleSubmit} className="mb-6 p-4 bg-orange-50 rounded-lg border border-orange-200">
             <h3 className="font-semibold text-gray-900 mb-4">העלאת מסמך חדש</h3>
             <div className="space-y-4">
               <div>
@@ -311,7 +311,7 @@ export default function Documents({ caseId, caseData }: DocumentsProps) {
               <button
                 type="submit"
                 disabled={uploading || !formData.file}
-                className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 font-semibold disabled:opacity-50"
+                className="bg-orange-600 text-white px-6 py-2 rounded-lg hover:bg-orange-700 font-semibold disabled:opacity-50"
               >
                 {uploading ? 'מעלה...' : 'העלה מסמך'}
               </button>
@@ -342,7 +342,7 @@ export default function Documents({ caseId, caseData }: DocumentsProps) {
               onClick={() => setFilterType('all')}
               className={`px-4 py-2 font-semibold transition-colors whitespace-nowrap ${
                 filterType === 'all'
-                  ? 'text-blue-600 border-b-2 border-blue-600'
+                  ? 'text-orange-600 border-b-2 border-orange-600'
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
@@ -357,7 +357,7 @@ export default function Documents({ caseId, caseData }: DocumentsProps) {
                   onClick={() => setFilterType(type)}
                   className={`px-4 py-2 font-semibold transition-colors whitespace-nowrap ${
                     filterType === type
-                      ? 'text-blue-600 border-b-2 border-blue-600'
+                      ? 'text-orange-600 border-b-2 border-orange-600'
                       : 'text-gray-600 hover:text-gray-900'
                   }`}
                 >
@@ -380,7 +380,7 @@ export default function Documents({ caseId, caseData }: DocumentsProps) {
             {canUpload && (
               <button
                 onClick={() => setShowForm(true)}
-                className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 font-semibold transition-colors"
+                className="inline-flex items-center gap-2 bg-orange-600 text-white px-6 py-3 rounded-lg hover:bg-orange-700 font-semibold transition-colors"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -404,7 +404,7 @@ export default function Documents({ caseId, caseData }: DocumentsProps) {
                 return (
                   <div
                     key={doc._id}
-                    className="flex justify-between items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 hover:border-blue-300 transition-all"
+                    className="flex justify-between items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 hover:border-orange-300 transition-all"
                   >
                     <div className="flex items-center gap-4 flex-1">
                       <div className="text-3xl">{getFileIcon(doc.originalName, doc.mimeType)}</div>
@@ -412,7 +412,7 @@ export default function Documents({ caseId, caseData }: DocumentsProps) {
                         <div className="flex items-center gap-2 mb-1">
                           <p className="font-semibold text-gray-900">{doc.originalName}</p>
                           {doc.documentType && (
-                            <span className="px-2 py-0.5 text-xs rounded bg-blue-100 text-blue-700">
+                            <span className="px-2 py-0.5 text-xs rounded bg-orange-100 text-orange-700">
                               {getDocumentTypeLabel(doc.documentType as DocumentType)}
                             </span>
                           )}
@@ -466,7 +466,7 @@ export default function Documents({ caseId, caseData }: DocumentsProps) {
                       )}
                       <button
                         onClick={() => handleDownload(doc._id, doc.originalName)}
-                        className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-100 font-semibold transition-colors flex items-center gap-2"
+                        className="bg-orange-50 text-orange-600 px-4 py-2 rounded-lg hover:bg-orange-100 font-semibold transition-colors flex items-center gap-2"
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />

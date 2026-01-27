@@ -48,7 +48,7 @@ export default function ArbitratorPage() {
       <Layout allowedRoles={[UserRole.ARBITRATOR]}>
         <div className="min-h-screen flex items-center justify-center">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600 mx-auto mb-4"></div>
             <p className="text-gray-600">טוען תיקים...</p>
           </div>
         </div>
@@ -58,7 +58,7 @@ export default function ArbitratorPage() {
 
   return (
     <Layout allowedRoles={[UserRole.ARBITRATOR]}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-white">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div>
@@ -67,7 +67,7 @@ export default function ArbitratorPage() {
           </div>
           <button
             onClick={() => router.push('/arbitrator/cases/new')}
-            className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-lg hover:shadow-xl font-semibold flex items-center gap-2"
+            className="bg-gradient-to-r from-orange-600 to-orange-700 text-white px-6 py-3 rounded-lg hover:from-orange-700 hover:to-orange-800 transition-all duration-200 shadow-lg hover:shadow-xl font-semibold flex items-center gap-2"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -79,30 +79,30 @@ export default function ArbitratorPage() {
         {/* Statistics Cards */}
         {cases.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg p-6 text-white">
+            <div className="bg-gradient-to-r from-orange-300 to-orange-700 rounded-xl shadow-lg p-6 text-white">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-blue-100 text-sm font-medium">סה"כ תיקים</span>
-                <svg className="w-8 h-8 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <span className="text-orange-50 text-sm font-medium">סה"כ תיקים</span>
+                <svg className="w-8 h-8 text-orange-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
               </div>
               <div className="text-3xl font-bold">{stats.total}</div>
             </div>
 
-            <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-xl shadow-lg p-6 text-white">
+            <div className="bg-gradient-to-r from-orange-300 to-orange-700 rounded-xl shadow-lg p-6 text-white">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-green-100 text-sm font-medium">תיקים פעילים</span>
-                <svg className="w-8 h-8 text-green-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <span className="text-orange-50 text-sm font-medium">תיקים פעילים</span>
+                <svg className="w-8 h-8 text-orange-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
               <div className="text-3xl font-bold">{stats.active}</div>
             </div>
 
-            <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl shadow-lg p-6 text-white">
+            <div className="bg-gradient-to-r from-orange-300 to-orange-700 rounded-xl shadow-lg p-6 text-white">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-purple-100 text-sm font-medium">ממתין להחלטה</span>
-                <svg className="w-8 h-8 text-purple-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <span className="text-orange-50 text-sm font-medium">ממתין להחלטה</span>
+                <svg className="w-8 h-8 text-orange-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
@@ -110,10 +110,10 @@ export default function ArbitratorPage() {
             </div>
 
             {stats.totalAmount > 0 ? (
-              <div className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl shadow-lg p-6 text-white">
+              <div className="bg-gradient-to-r from-orange-300 to-orange-700 rounded-xl shadow-lg p-6 text-white">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-orange-100 text-sm font-medium">סכום כולל</span>
-                  <svg className="w-8 h-8 text-orange-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <span className="text-orange-50 text-sm font-medium">סכום כולל</span>
+                  <svg className="w-8 h-8 text-orange-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
@@ -122,10 +122,10 @@ export default function ArbitratorPage() {
                 </div>
               </div>
             ) : (
-              <div className="bg-gradient-to-br from-gray-500 to-gray-600 rounded-xl shadow-lg p-6 text-white">
+              <div className="bg-gradient-to-r from-orange-300 to-orange-700 rounded-xl shadow-lg p-6 text-white">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-gray-100 text-sm font-medium">תיקים סגורים</span>
-                  <svg className="w-8 h-8 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <span className="text-orange-50 text-sm font-medium">תיקים סגורים</span>
+                  <svg className="w-8 h-8 text-orange-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                   </svg>
                 </div>
@@ -146,7 +146,7 @@ export default function ArbitratorPage() {
               <p className="text-gray-600 mb-6">התחל ליצור תיקי בוררות חדשים</p>
               <button
                 onClick={() => router.push('/arbitrator/cases/new')}
-                className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-3 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-lg hover:shadow-xl font-semibold inline-flex items-center gap-2"
+                className="bg-gradient-to-r from-orange-600 to-orange-700 text-white px-8 py-3 rounded-lg hover:from-orange-700 hover:to-orange-800 transition-all duration-200 shadow-lg hover:shadow-xl font-semibold inline-flex items-center gap-2"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -165,7 +165,7 @@ export default function ArbitratorPage() {
               return (
                 <div
                   key={caseItem._id}
-                  className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-100 hover:border-blue-200 overflow-hidden group"
+                  className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-100 hover:border-orange-200 overflow-hidden group"
                   onClick={() => router.push(`/cases/${caseItem._id}`)}
                 >
                   {/* Status Badge */}
@@ -176,7 +176,7 @@ export default function ArbitratorPage() {
 
                   <div className="p-6">
                     {/* Title */}
-                    <h2 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors line-clamp-2">
+                    <h2 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-orange-600 transition-colors line-clamp-2">
                       {caseItem.title}
                     </h2>
 
@@ -223,7 +223,7 @@ export default function ArbitratorPage() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                           </svg>
                           <span className="text-gray-500">סכום תביעה:</span>
-                          <span className="font-bold text-green-600">
+                          <span className="font-bold text-orange-600">
                             {new Intl.NumberFormat('he-IL', { style: 'currency', currency: 'ILS' }).format(caseItem.claimAmount)}
                           </span>
                         </div>

@@ -168,7 +168,7 @@ export default function Hearings({ caseId }: HearingsProps) {
   const getStatusColor = (status: HearingStatus) => {
     switch (status) {
       case HearingStatus.CREATED:
-        return 'bg-blue-100 text-blue-700';
+        return 'bg-orange-100 text-orange-700';
       case HearingStatus.ACTIVE:
         return 'bg-yellow-100 text-yellow-700';
       case HearingStatus.ENDED:
@@ -196,7 +196,7 @@ export default function Hearings({ caseId }: HearingsProps) {
           {canCreate && (
             <button
               onClick={() => setShowForm(!showForm)}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-semibold flex items-center gap-2"
+              className="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 font-semibold flex items-center gap-2"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -208,7 +208,7 @@ export default function Hearings({ caseId }: HearingsProps) {
 
         {/* Create Hearing Form */}
         {showForm && canCreate && (
-          <form onSubmit={handleSubmit} className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+          <form onSubmit={handleSubmit} className="mb-6 p-4 bg-orange-50 rounded-lg border border-orange-200">
             <h3 className="font-semibold text-gray-900 mb-4">יצירת דיון חדש</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
@@ -279,7 +279,7 @@ export default function Hearings({ caseId }: HearingsProps) {
               <button
                 type="submit"
                 disabled={submitting}
-                className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 font-semibold disabled:opacity-50"
+                className="bg-orange-600 text-white px-6 py-2 rounded-lg hover:bg-orange-700 font-semibold disabled:opacity-50"
               >
                 {submitting ? 'יוצר...' : 'צור דיון'}
               </button>
@@ -384,12 +384,12 @@ export default function Hearings({ caseId }: HearingsProps) {
                               <button
                                 key={session._id}
                                 onClick={() => router.push(`/cases/${caseId}/discussions/${session._id}`)}
-                                className="w-full text-right p-2 bg-blue-50 hover:bg-blue-100 rounded-lg border border-blue-200 transition-colors"
+                                className="w-full text-right p-2 bg-orange-50 hover:bg-orange-100 rounded-lg border border-orange-200 transition-colors"
                               >
                                 <div className="flex justify-between items-center">
                                   <span className={`px-2 py-1 text-xs rounded ${
                                     session.status === 'active' ? 'bg-green-100 text-green-700' :
-                                    session.status === 'completed' ? 'bg-blue-100 text-blue-700' :
+                                    session.status === 'completed' ? 'bg-orange-100 text-orange-700' :
                                     'bg-gray-100 text-gray-700'
                                   }`}>
                                     {session.status === 'active' ? 'פעיל' :
@@ -442,7 +442,7 @@ export default function Hearings({ caseId }: HearingsProps) {
                           className={`px-4 py-2 rounded-lg font-semibold flex items-center gap-2 whitespace-nowrap ${
                             (activeSession?.status === 'completed' || activeSession?.status === 'cancelled' || completedSession)
                               ? 'bg-gray-600 text-white hover:bg-gray-700'
-                              : 'bg-blue-600 text-white hover:bg-blue-700'
+                              : 'bg-orange-600 text-white hover:bg-orange-700'
                           }`}
                         >
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

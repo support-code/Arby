@@ -98,7 +98,7 @@ export default function PDFViewer({ file, onLoadSuccess, className = '' }: PDFVi
           <button
             onClick={goToPrevPage}
             disabled={pageNumber <= 1}
-            className="px-3 py-1 bg-blue-500 text-white rounded disabled:bg-gray-300 disabled:cursor-not-allowed"
+            className="px-3 py-1 bg-orange-500 text-white rounded disabled:bg-gray-300 disabled:cursor-not-allowed"
           >
             קודם
           </button>
@@ -108,7 +108,7 @@ export default function PDFViewer({ file, onLoadSuccess, className = '' }: PDFVi
           <button
             onClick={goToNextPage}
             disabled={pageNumber >= numPages}
-            className="px-3 py-1 bg-blue-500 text-white rounded disabled:bg-gray-300 disabled:cursor-not-allowed"
+            className="px-3 py-1 bg-orange-500 text-white rounded disabled:bg-gray-300 disabled:cursor-not-allowed"
           >
             הבא
           </button>

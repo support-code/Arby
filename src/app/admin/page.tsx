@@ -78,7 +78,7 @@ export default function AdminPage() {
         {/* Statistics */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-white p-6 rounded-lg shadow">
-            <h2 className="text-2xl font-bold text-blue-600">{users.length}</h2>
+            <h2 className="text-2xl font-bold text-orange-600">{users.length}</h2>
             <p className="text-gray-600">משתמשים</p>
           </div>
           <div className="bg-white p-6 rounded-lg shadow">
@@ -96,7 +96,7 @@ export default function AdminPage() {
           <h1 className="text-3xl font-bold">לוח בקרה - מנהל מערכת</h1>
           <button
             onClick={() => setShowCreateUser(true)}
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700"
+            className="bg-orange-600 text-white px-6 py-2 rounded-lg hover:bg-orange-700"
           >
             + צור משתמש חדש
           </button>
@@ -152,7 +152,7 @@ export default function AdminPage() {
                 <div className="flex gap-4">
                   <button
                     type="submit"
-                    className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700"
+                    className="flex-1 bg-orange-600 text-white py-2 px-4 rounded-lg hover:bg-orange-700"
                   >
                     צור משתמש
                   </button>
@@ -238,7 +238,7 @@ export default function AdminPage() {
                 {cases.map((caseItem) => (
                   <tr key={caseItem._id}>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      <a href={`/cases/${caseItem._id}`} className="text-blue-600 hover:underline">
+                      <a href={`/cases/${caseItem._id}`} className="text-orange-600 hover:underline">
                         {caseItem.title}
                       </a>
                     </td>

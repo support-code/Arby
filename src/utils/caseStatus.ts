@@ -17,20 +17,20 @@ export const getStatusConfig = (status: CaseStatus): StatusConfig => {
     },
     [CaseStatus.ACTIVE]: {
       label: 'תיק פעיל',
-      color: 'text-blue-800',
-      bgColor: 'bg-blue-100',
+      color: 'text-orange-800',
+      bgColor: 'bg-orange-100',
       icon: '⚖️'
     },
     [CaseStatus.PENDING_DECISION]: {
       label: 'ממתין להחלטה',
-      color: 'text-purple-800',
-      bgColor: 'bg-purple-100',
+      color: 'text-orange-800',
+      bgColor: 'bg-orange-100',
       icon: '⏳'
     },
     [CaseStatus.CLOSED]: {
       label: 'הוכרע',
-      color: 'text-green-800',
-      bgColor: 'bg-green-100',
+      color: 'text-orange-800',
+      bgColor: 'bg-orange-100',
       icon: '✅'
     },
     [CaseStatus.ARCHIVED]: {

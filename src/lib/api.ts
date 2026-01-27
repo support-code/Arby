@@ -81,6 +81,10 @@ export const authAPI = {
     const { data } = await api.post('/auth/register', { email, password, name, token });
     return data;
   },
+  registerArbitrator: async (email: string, password: string, name: string) => {
+    const { data } = await api.post('/auth/register/arbitrator', { email, password, name });
+    return data;
+  },
   getMe: async (): Promise<User> => {
     const { data } = await api.get('/auth/me');
     return data;

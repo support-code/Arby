@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
-import { Rubik } from 'next/font/google';
+import { Heebo } from 'next/font/google';
 import './globals.css';
 import PDFConfig from '@/components/pdf/PDFConfig';
 
-const rubik = Rubik({ 
+const heebo = Heebo({ 
   subsets: ['latin', 'hebrew'],
-  weight: ['300', '400', '500', '600', '700']
+  weight: ['300', '400', '500', '600', '700', '800', '900']
 });
 
 export const metadata: Metadata = {
@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="he" dir="rtl">
-      <body className={rubik.className}>
+      <body className={heebo.className}>
         <PDFConfig />
         {children}
       </body>

@@ -176,7 +176,7 @@ export default function Reminders({ caseId, caseData }: RemindersProps) {
           {canCreate && (
             <button
               onClick={() => setShowForm(!showForm)}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-semibold flex items-center gap-2"
+              className="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 font-semibold flex items-center gap-2"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -188,7 +188,7 @@ export default function Reminders({ caseId, caseData }: RemindersProps) {
 
         {/* Create Form */}
         {showForm && canCreate && (
-          <form onSubmit={handleSubmit} className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+          <form onSubmit={handleSubmit} className="mb-6 p-4 bg-orange-50 rounded-lg border border-orange-200">
             <input
               type="text"
               value={formData.title}
@@ -222,7 +222,7 @@ export default function Reminders({ caseId, caseData }: RemindersProps) {
             <div className="flex gap-2">
               <button
                 type="submit"
-                className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 font-semibold"
+                className="bg-orange-600 text-white px-6 py-2 rounded-lg hover:bg-orange-700 font-semibold"
               >
                 צור תזכורת
               </button>
@@ -304,7 +304,7 @@ export default function Reminders({ caseId, caseData }: RemindersProps) {
             {/* Upcoming */}
             {upcomingReminders.length > 0 && (
               <div>
-                <h3 className="font-semibold text-blue-600 mb-3 flex items-center gap-2">
+                <h3 className="font-semibold text-orange-600 mb-3 flex items-center gap-2">
                   <span>📅</span>
                   תזכורות קרובות ({upcomingReminders.length})
                 </h3>
@@ -312,10 +312,10 @@ export default function Reminders({ caseId, caseData }: RemindersProps) {
                   {upcomingReminders.map((reminder) => {
                     const assignedTo = typeof reminder.assignedTo === 'object' ? reminder.assignedTo.name : 'משתמש';
                     return (
-                      <div key={reminder._id} className="p-4 border border-blue-200 rounded-lg bg-blue-50 flex justify-between items-center">
+                      <div key={reminder._id} className="p-4 border border-orange-200 rounded-lg bg-orange-50 flex justify-between items-center">
                         <div className="flex-1">
                           <p className="font-semibold text-gray-900">{reminder.title}</p>
-                          <p className="text-sm text-blue-600 mt-1">
+                          <p className="text-sm text-orange-600 mt-1">
                             {new Date(reminder.dueDate).toLocaleDateString('he-IL', {
                               year: 'numeric',
                               month: 'long',

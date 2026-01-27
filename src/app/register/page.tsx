@@ -91,7 +91,7 @@ export default function RegisterPage() {
               {error}
             </div>
           )}
-          <a href="/login" className="text-blue-600 hover:underline block text-center">
+          <a href="/login" className="text-orange-600 hover:underline block text-center">
             חזרה להתחברות
           </a>
         </div>
@@ -146,7 +146,7 @@ export default function RegisterPage() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
             />
           </div>
 
@@ -161,14 +161,14 @@ export default function RegisterPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
               minLength={8}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-orange-600 text-white py-2 px-4 rounded-md hover:bg-orange-700 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? 'נרשם...' : 'הרשם'}
           </button>
@@ -176,7 +176,7 @@ export default function RegisterPage() {
 
         <p className="mt-4 text-center text-sm text-gray-600">
           כבר יש לך חשבון?{' '}
-          <a href="/login" className="text-blue-600 hover:underline">
+          <a href="/login" className="text-orange-600 hover:underline">
             התחבר
           </a>
         </p>

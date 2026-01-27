@@ -116,7 +116,7 @@ export default function RelatedCases({ caseId }: RelatedCasesProps) {
           {canManage && (
             <button
               onClick={() => setShowForm(!showForm)}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-semibold flex items-center gap-2"
+              className="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 font-semibold flex items-center gap-2"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -128,7 +128,7 @@ export default function RelatedCases({ caseId }: RelatedCasesProps) {
 
         {/* Create Form */}
         {showForm && canManage && (
-          <form onSubmit={handleSubmit} className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+          <form onSubmit={handleSubmit} className="mb-6 p-4 bg-orange-50 rounded-lg border border-orange-200">
             <select
               value={formData.relatedCaseId}
               onChange={(e) => setFormData({ ...formData, relatedCaseId: e.target.value })}
@@ -163,7 +163,7 @@ export default function RelatedCases({ caseId }: RelatedCasesProps) {
             <div className="flex gap-2">
               <button
                 type="submit"
-                className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 font-semibold"
+                className="bg-orange-600 text-white px-6 py-2 rounded-lg hover:bg-orange-700 font-semibold"
               >
                 צור קישור
               </button>
@@ -200,14 +200,14 @@ export default function RelatedCases({ caseId }: RelatedCasesProps) {
                   <div className="flex justify-between items-start">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
-                        <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">
+                        <span className="px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded">
                           {relationTypeLabels[relatedCase.relationType]}
                         </span>
                         <button
                           onClick={() => handleCaseClick(typeof relatedCase.relatedCaseId === 'object' 
                             ? relatedCase.relatedCaseId._id 
                             : relatedCase.relatedCaseId)}
-                          className="font-semibold text-gray-900 hover:text-blue-600"
+                          className="font-semibold text-gray-900 hover:text-orange-600"
                         >
                           {caseTitle}
                         </button>

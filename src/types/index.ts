@@ -2,7 +2,8 @@ export enum UserRole {
   ADMIN = 'admin',
   ARBITRATOR = 'arbitrator',
   LAWYER = 'lawyer',
-  PARTY = 'party'
+  PARTY = 'party',
+  ASSISTANT = 'assistant' // עוזרת משפטית/מזכירה
 }
 
 export enum CaseStatus {
@@ -34,17 +35,32 @@ export interface User {
   id: string;
   email: string;
   name: string;
+  firstName?: string;
+  lastName?: string;
+  idNumber?: string;
+  address?: string;
+  phone?: string;
+  profession?: string;
   role: UserRole;
   status?: string;
+}
+
+export enum PartyStatus {
+  PLAINTIFF = 'תובע',
+  PLAINTIFF_FEMALE = 'תובעת',
+  DEFENDANT = 'נתבע',
+  DEFENDANT_FEMALE = 'נתבעת'
 }
 
 export interface Case {
   _id: string;
   title: string;
   description?: string;
-  arbitratorId: User | string;
+  arbitratorIds: (User | string)[]; // Changed from arbitratorId
   lawyers: User[] | string[];
   parties: User[] | string[];
+  caseParties?: CaseParty[];
+  caseLawyers?: CaseLawyer[];
   status: CaseStatus;
   createdAt: string;
   updatedAt: string;
@@ -54,6 +70,36 @@ export interface Case {
   caseType?: string;
   claimAmount?: number;
   confidentialityLevel?: 'public' | 'confidential' | 'secret' | 'top_secret';
+}
+
+export interface CaseParty {
+  _id: string;
+  caseId: string;
+  userId?: string;
+  companyId?: string;
+  isCompany: boolean;
+  status: PartyStatus;
+  firstName?: string;
+  lastName?: string;
+  idNumber?: string;
+  address?: string;
+  phone?: string;
+  email?: string;
+}
+
+export interface CaseLawyer {
+  _id: string;
+  caseId: string;
+  userId?: string;
+  partyId: string;
+  firstName: string;
+  lastName: string;
+  idNumber?: string;
+  address?: string;
+  phone?: string;
+  email: string;
+  profession: string;
+  status: string;
 }
 
 export interface Document {

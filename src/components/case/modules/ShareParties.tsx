@@ -64,7 +64,7 @@ export default function ShareParties({ caseData }: SharePartiesProps) {
           <h2 className="text-xl font-bold text-gray-900">שיתוף צדדים</h2>
           <button
             onClick={() => setShowInviteForm(!showInviteForm)}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-semibold flex items-center gap-2"
+            className="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 font-semibold flex items-center gap-2"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -75,7 +75,7 @@ export default function ShareParties({ caseData }: SharePartiesProps) {
 
         {/* Invite Form */}
         {showInviteForm && (
-          <form onSubmit={handleInvite} className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+          <form onSubmit={handleInvite} className="mb-6 p-4 bg-orange-50 rounded-lg border border-orange-200">
             <div className="mb-3">
               <label className="block text-sm font-semibold text-gray-700 mb-2">
                 כתובת אימייל
@@ -106,7 +106,7 @@ export default function ShareParties({ caseData }: SharePartiesProps) {
               <button
                 type="submit"
                 disabled={inviting}
-                className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 font-semibold disabled:opacity-50"
+                className="bg-orange-600 text-white px-6 py-2 rounded-lg hover:bg-orange-700 font-semibold disabled:opacity-50"
               >
                 {inviting ? 'שולח...' : 'שלח הזמנה'}
               </button>
@@ -143,7 +143,7 @@ export default function ShareParties({ caseData }: SharePartiesProps) {
                         <p className="font-semibold text-gray-900">{partyName}</p>
                         {partyEmail && <p className="text-sm text-gray-600">{partyEmail}</p>}
                       </div>
-                      <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">צד</span>
+                      <span className="px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded">צד</span>
                     </div>
                   );
                 })}

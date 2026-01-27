@@ -72,8 +72,13 @@ export default function CaseDetailPage() {
   }
 
   const statusConfig = getStatusConfig(caseData.status);
-  const arbitratorName = typeof caseData.arbitratorId === 'object' && caseData.arbitratorId
-    ? caseData.arbitratorId.name
+  // Get arbitrator name from arbitratorIds array
+  const arbitratorName = caseData.arbitratorIds && Array.isArray(caseData.arbitratorIds) && caseData.arbitratorIds.length > 0
+    ? (typeof caseData.arbitratorIds[0] === 'object' && caseData.arbitratorIds[0]?.name 
+       ? caseData.arbitratorIds[0].name 
+       : caseData.arbitratorIds.length > 1 
+         ? `${caseData.arbitratorIds.length} בוררים`
+         : 'בורר')
     : 'לא הוגדר';
 
   return (
@@ -104,8 +109,19 @@ export default function CaseDetailPage() {
                     </button>
                     <span className="text-gray-400">•</span>
                     <span className="text-gray-500 text-sm">תיק בוררות</span>
-                    <span className="text-gray-400">#</span>
-                    <span className="font-mono text-sm text-gray-600">{caseId.slice(-6).toUpperCase()}</span>
+                    {caseData.caseNumber && (
+                      <>
+                        <span className="text-gray-400">•</span>
+                        <span className="text-gray-500 text-sm">מספר תיק:</span>
+                        <span className="font-mono text-sm font-semibold text-gray-900">{caseData.caseNumber}</span>
+                      </>
+                    )}
+                    {!caseData.caseNumber && (
+                      <>
+                        <span className="text-gray-400">#</span>
+                        <span className="font-mono text-sm text-gray-600">{caseId.slice(-6).toUpperCase()}</span>
+                      </>
+                    )}
                   </div>
                   <h1 className="text-3xl font-bold mb-3 text-gray-900">{caseData.title}</h1>
                   {caseData.description && (
@@ -120,7 +136,13 @@ export default function CaseDetailPage() {
                 )}
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 pt-4 border-t border-gray-200">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4 pt-4 border-t border-gray-200">
+                {caseData.caseNumber && (
+                  <div>
+                    <span className="text-gray-500 text-sm">מספר תיק:</span>
+                    <p className="font-semibold text-lg text-gray-900 font-mono">{caseData.caseNumber}</p>
+                  </div>
+                )}
                 <div>
                   <span className="text-gray-500 text-sm">בורר:</span>
                   <p className="font-semibold text-lg text-gray-900">{arbitratorName}</p>

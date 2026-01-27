@@ -417,31 +417,31 @@ export default function PDFAnnotator({ documentId, requestId, readOnly = false, 
           <span className="text-sm font-semibold">כלי סימון:</span>
           <button
             onClick={() => setSelectedTool(AnnotationType.HIGHLIGHT)}
-            className={`px-3 py-1 rounded ${selectedTool === AnnotationType.HIGHLIGHT ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+            className={`px-3 py-1 rounded ${selectedTool === AnnotationType.HIGHLIGHT ? 'bg-orange-500 text-white' : 'bg-gray-200'}`}
           >
             הדגשה
           </button>
           <button
             onClick={() => setSelectedTool(AnnotationType.RECTANGLE)}
-            className={`px-3 py-1 rounded ${selectedTool === AnnotationType.RECTANGLE ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+            className={`px-3 py-1 rounded ${selectedTool === AnnotationType.RECTANGLE ? 'bg-orange-500 text-white' : 'bg-gray-200'}`}
           >
             מלבן
           </button>
           <button
             onClick={() => setSelectedTool(AnnotationType.CIRCLE)}
-            className={`px-3 py-1 rounded ${selectedTool === AnnotationType.CIRCLE ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+            className={`px-3 py-1 rounded ${selectedTool === AnnotationType.CIRCLE ? 'bg-orange-500 text-white' : 'bg-gray-200'}`}
           >
             עיגול
           </button>
           <button
             onClick={() => setSelectedTool(AnnotationType.ARROW)}
-            className={`px-3 py-1 rounded ${selectedTool === AnnotationType.ARROW ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+            className={`px-3 py-1 rounded ${selectedTool === AnnotationType.ARROW ? 'bg-orange-500 text-white' : 'bg-gray-200'}`}
           >
             חץ
           </button>
           <button
             onClick={() => setSelectedTool(AnnotationType.TEXT)}
-            className={`px-3 py-1 rounded ${selectedTool === AnnotationType.TEXT ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+            className={`px-3 py-1 rounded ${selectedTool === AnnotationType.TEXT ? 'bg-orange-500 text-white' : 'bg-gray-200'}`}
           >
             טקסט
           </button>
@@ -532,7 +532,7 @@ export default function PDFAnnotator({ documentId, requestId, readOnly = false, 
           <button
             onClick={() => setPageNumber(prev => Math.max(1, prev - 1))}
             disabled={pageNumber <= 1}
-            className="px-3 py-1 bg-blue-500 text-white rounded disabled:bg-gray-300"
+            className="px-3 py-1 bg-orange-500 text-white rounded disabled:bg-gray-300"
           >
             קודם
           </button>
@@ -542,7 +542,7 @@ export default function PDFAnnotator({ documentId, requestId, readOnly = false, 
           <button
             onClick={() => setPageNumber(prev => Math.min(numPages, prev + 1))}
             disabled={pageNumber >= numPages}
-            className="px-3 py-1 bg-blue-500 text-white rounded disabled:bg-gray-300"
+            className="px-3 py-1 bg-orange-500 text-white rounded disabled:bg-gray-300"
           >
             הבא
           </button>

@@ -62,7 +62,7 @@ export default function Protocols({ caseId }: ProtocolsProps) {
     <div className="space-y-6">
       <div className="bg-white rounded-lg shadow p-6 border border-gray-200">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-bold text-gray-900 border-b-2 border-blue-500 pb-2">פרוטוקולים</h2>
+          <h2 className="text-xl font-bold text-gray-900 border-b-2 border-orange-500 pb-2">פרוטוקולים</h2>
         </div>
 
         {(protocols.length === 0 && discussionProtocols.length === 0) ? (
@@ -87,12 +87,12 @@ export default function Protocols({ caseId }: ProtocolsProps) {
                     return (
                       <div
                         key={protocol._id}
-                        className="p-4 border-2 border-blue-200 rounded-lg bg-blue-50 hover:bg-blue-100 transition-all"
+                        className="p-4 border-2 border-orange-200 rounded-lg bg-orange-50 hover:bg-orange-100 transition-all"
                       >
                         <div className="flex justify-between items-start mb-2">
                           <div className="flex-1">
                             <div className="flex items-center gap-2 mb-1">
-                              <span className="px-2 py-1 bg-blue-600 text-white text-xs rounded font-semibold">
+                              <span className="px-2 py-1 bg-orange-600 text-white text-xs rounded font-semibold">
                                 גרסה {protocol.version}
                               </span>
                               <span className="font-semibold text-gray-900">{sessionTitle}</span>
@@ -129,7 +129,7 @@ export default function Protocols({ caseId }: ProtocolsProps) {
                     return (
                       <div
                         key={protocol._id}
-                        className="flex justify-between items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 hover:border-blue-300 transition-all"
+                        className="flex justify-between items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 hover:border-orange-300 transition-all"
                       >
                         <div className="flex items-center gap-4 flex-1">
                           <div className="bg-purple-100 p-3 rounded-lg">
@@ -156,7 +156,7 @@ export default function Protocols({ caseId }: ProtocolsProps) {
                         </div>
                         <button
                           onClick={() => handleDownload(protocol._id, protocol.originalName)}
-                          className="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-100 font-semibold transition-colors flex items-center gap-2"
+                          className="bg-orange-50 text-orange-600 px-4 py-2 rounded-lg hover:bg-orange-100 font-semibold transition-colors flex items-center gap-2"
                         >
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />

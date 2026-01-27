@@ -48,7 +48,7 @@ export default function LawyerPage() {
       <Layout allowedRoles={[UserRole.LAWYER]}>
         <div className="min-h-screen flex items-center justify-center">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600 mx-auto mb-4"></div>
             <p className="text-gray-600">טוען תיקים...</p>
           </div>
         </div>
@@ -68,10 +68,10 @@ export default function LawyerPage() {
         {/* Statistics Cards */}
         {cases.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg p-6 text-white">
+            <div className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl shadow-lg p-6 text-white">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-blue-100 text-sm font-medium">סה"כ תיקים</span>
-                <svg className="w-8 h-8 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <span className="text-orange-100 text-sm font-medium">סה"כ תיקים</span>
+                <svg className="w-8 h-8 text-orange-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
               </div>
@@ -138,7 +138,7 @@ export default function LawyerPage() {
               return (
                 <div
                   key={caseItem._id}
-                  className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-100 hover:border-blue-200 overflow-hidden group"
+                  className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-100 hover:border-orange-200 overflow-hidden group"
                   onClick={() => router.push(`/cases/${caseItem._id}`)}
                 >
                   {/* Status Badge */}
@@ -149,7 +149,7 @@ export default function LawyerPage() {
 
                   <div className="p-6">
                     {/* Title */}
-                    <h2 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors line-clamp-2">
+                    <h2 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-orange-600 transition-colors line-clamp-2">
                       {caseItem.title}
                     </h2>
 

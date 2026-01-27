@@ -200,7 +200,7 @@ export default function Timeline({ caseId }: TimelineProps) {
             {timeline.map((event, index) => (
               <div key={index} className="flex gap-4 relative">
                 <div className="flex flex-col items-center">
-                  <div className="w-3 h-3 bg-blue-500 rounded-full border-2 border-white shadow"></div>
+                  <div className="w-3 h-3 bg-orange-500 rounded-full border-2 border-white shadow"></div>
                   {index < timeline.length - 1 && (
                     <div className="w-0.5 h-full bg-gray-200 mt-2"></div>
                   )}
