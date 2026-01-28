@@ -129,8 +129,17 @@ export default function LawyerPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {cases.map((caseItem) => {
               const statusConfig = getStatusConfig(caseItem.status);
-              const arbitratorName = typeof caseItem.arbitratorId === 'object' && caseItem.arbitratorId
-                ? caseItem.arbitratorId.name
+              const getArbitratorName = (arbitrator: any): string => {
+                if (typeof arbitrator === 'object' && arbitrator !== null) {
+                  return arbitrator.name || `${arbitrator.firstName || ''} ${arbitrator.lastName || ''}`.trim() || arbitrator.email || 'בורר';
+                }
+                return 'בורר';
+              };
+              const arbitrators = caseItem.arbitratorIds && Array.isArray(caseItem.arbitratorIds) && caseItem.arbitratorIds.length > 0
+                ? caseItem.arbitratorIds.map(getArbitratorName)
+                : [];
+              const arbitratorName = arbitrators.length > 0 
+                ? (arbitrators.length === 1 ? arbitrators[0] : `${arbitrators.length} בוררים`)
                 : 'לא הוגדר';
               const lawyersCount = Array.isArray(caseItem.lawyers) ? caseItem.lawyers.length : 0;
               const partiesCount = Array.isArray(caseItem.parties) ? caseItem.parties.length : 0;

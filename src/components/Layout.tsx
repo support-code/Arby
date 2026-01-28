@@ -57,7 +57,8 @@ export default function Layout({ children, allowedRoles }: LayoutProps) {
     admin: 'מנהל מערכת',
     arbitrator: 'בורר',
     lawyer: 'עורך דין',
-    party: 'צד'
+    party: 'צד',
+    assistant: 'עוזר'
   };
 
   return (

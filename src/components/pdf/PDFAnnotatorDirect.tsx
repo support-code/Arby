@@ -371,6 +371,8 @@ export default function PDFAnnotatorDirect({ documentId, requestId, caseId, read
             annotationToEdit = updatedAnnotations.find(a => 
               a.type === AnnotationType.RECTANGLE &&
               a.pageNumber === pageNum &&
+              a.x !== undefined && annotation.x !== undefined &&
+              a.y !== undefined && annotation.y !== undefined &&
               Math.abs(a.x - annotation.x) < 0.01 &&
               Math.abs(a.y - annotation.y) < 0.01 &&
               Math.abs((a.width || 0) - (annotation.width || 0)) < 0.01 &&

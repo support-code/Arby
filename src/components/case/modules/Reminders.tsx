@@ -44,24 +44,26 @@ export default function Reminders({ caseId, caseData }: RemindersProps) {
   const loadCaseUsers = () => {
     const users: User[] = [];
     
-    // Add arbitrator
-    if (caseData.arbitratorId) {
-      if (typeof caseData.arbitratorId === 'object') {
-        const arbitrator = caseData.arbitratorId as any;
-        users.push({
-          id: arbitrator._id || arbitrator.id,
-          name: arbitrator.name || 'בורר',
-          email: arbitrator.email || '',
-          role: arbitrator.role || UserRole.ARBITRATOR
-        });
-      } else {
-        users.push({ 
-          id: caseData.arbitratorId, 
-          name: 'בורר', 
-          email: '', 
-          role: UserRole.ARBITRATOR 
-        });
-      }
+    // Add arbitrators
+    if (caseData.arbitratorIds && Array.isArray(caseData.arbitratorIds)) {
+      caseData.arbitratorIds.forEach(arbitrator => {
+        if (typeof arbitrator === 'object' && arbitrator !== null) {
+          const arb = arbitrator as any;
+          users.push({
+            id: arb._id || arb.id,
+            name: arb.name || 'בורר',
+            email: arb.email || '',
+            role: arb.role || UserRole.ARBITRATOR
+          });
+        } else if (arbitrator) {
+          users.push({ 
+            id: arbitrator as string, 
+            name: 'בורר', 
+            email: '', 
+            role: UserRole.ARBITRATOR 
+          });
+        }
+      });
     }
     
     // Add lawyers

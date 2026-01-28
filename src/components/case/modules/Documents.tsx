@@ -109,8 +109,12 @@ export default function Documents({ caseId, caseData }: DocumentsProps) {
   const getAllCaseUsers = (): User[] => {
     const users: User[] = [];
     
-    if (typeof caseData.arbitratorId === 'object' && caseData.arbitratorId) {
-      users.push(caseData.arbitratorId);
+    if (caseData.arbitratorIds && Array.isArray(caseData.arbitratorIds)) {
+      caseData.arbitratorIds.forEach(arbitrator => {
+        if (typeof arbitrator === 'object' && arbitrator !== null) {
+          users.push(arbitrator);
+        }
+      });
     }
     
     const lawyers = Array.isArray(caseData.lawyers) ? caseData.lawyers : [];

@@ -72,13 +72,21 @@ export default function CaseDetailPage() {
   }
 
   const statusConfig = getStatusConfig(caseData.status);
-  // Get arbitrator name from arbitratorIds array
-  const arbitratorName = caseData.arbitratorIds && Array.isArray(caseData.arbitratorIds) && caseData.arbitratorIds.length > 0
-    ? (typeof caseData.arbitratorIds[0] === 'object' && caseData.arbitratorIds[0]?.name 
-       ? caseData.arbitratorIds[0].name 
-       : caseData.arbitratorIds.length > 1 
-         ? `${caseData.arbitratorIds.length} בוררים`
-         : 'בורר')
+  
+  // Get all arbitrators from arbitratorIds array
+  const getArbitratorName = (arbitrator: any): string => {
+    if (typeof arbitrator === 'object' && arbitrator !== null) {
+      return arbitrator.name || `${arbitrator.firstName || ''} ${arbitrator.lastName || ''}`.trim() || arbitrator.email || 'בורר';
+    }
+    return 'בורר';
+  };
+
+  const arbitrators = caseData.arbitratorIds && Array.isArray(caseData.arbitratorIds) && caseData.arbitratorIds.length > 0
+    ? caseData.arbitratorIds.map(getArbitratorName)
+    : [];
+  
+  const arbitratorDisplay = arbitrators.length > 0 
+    ? (arbitrators.length === 1 ? arbitrators[0] : `${arbitrators.length} בוררים`)
     : 'לא הוגדר';
 
   return (
@@ -143,9 +151,20 @@ export default function CaseDetailPage() {
                     <p className="font-semibold text-lg text-gray-900 font-mono">{caseData.caseNumber}</p>
                   </div>
                 )}
-                <div>
-                  <span className="text-gray-500 text-sm">בורר:</span>
-                  <p className="font-semibold text-lg text-gray-900">{arbitratorName}</p>
+                <div className={arbitrators.length > 1 ? 'md:col-span-2' : ''}>
+                  <span className="text-gray-500 text-sm">{arbitrators.length > 1 ? 'בוררים:' : 'בורר:'}</span>
+                  {arbitrators.length > 0 ? (
+                    <div className="mt-1 space-y-1">
+                      {arbitrators.map((name, index) => (
+                        <p key={index} className="font-semibold text-lg text-gray-900">
+                          {name}
+                          {arbitrators.length > 1 && <span className="text-gray-400 text-sm ml-2">({index + 1})</span>}
+                        </p>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="font-semibold text-lg text-gray-400 italic">לא הוגדר</p>
+                  )}
                 </div>
                 <div>
                   <span className="text-gray-500 text-sm">נפתח:</span>

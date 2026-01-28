@@ -243,8 +243,12 @@ export default function AdminPage() {
                       </a>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {caseItem.arbitratorId && typeof caseItem.arbitratorId === 'object' && caseItem.arbitratorId !== null 
-                        ? caseItem.arbitratorId.name 
+                      {caseItem.arbitratorIds && Array.isArray(caseItem.arbitratorIds) && caseItem.arbitratorIds.length > 0
+                        ? (caseItem.arbitratorIds.length === 1
+                            ? (typeof caseItem.arbitratorIds[0] === 'object' && caseItem.arbitratorIds[0] !== null
+                                ? caseItem.arbitratorIds[0].name || caseItem.arbitratorIds[0].email
+                                : 'בורר')
+                            : `${caseItem.arbitratorIds.length} בוררים`)
                         : '-'}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{caseItem.status}</td>

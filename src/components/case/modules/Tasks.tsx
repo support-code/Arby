@@ -31,13 +31,17 @@ export default function Tasks({ caseId, caseData }: TasksProps) {
   const getAllCaseUsers = (): User[] => {
     const users: User[] = [];
     
-    if (typeof caseData.arbitratorId === 'object' && caseData.arbitratorId) {
-      const arbitrator = caseData.arbitratorId as any;
-      users.push({
-        id: arbitrator.id || arbitrator._id,
-        email: arbitrator.email,
-        name: arbitrator.name,
-        role: arbitrator.role
+    if (caseData.arbitratorIds && Array.isArray(caseData.arbitratorIds)) {
+      caseData.arbitratorIds.forEach(arbitrator => {
+        if (typeof arbitrator === 'object' && arbitrator !== null) {
+          const arb = arbitrator as any;
+          users.push({
+            id: arb.id || arb._id,
+            email: arb.email,
+            name: arb.name,
+            role: arb.role
+          });
+        }
       });
     }
     
